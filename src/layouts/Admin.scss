@@ -1,0 +1,42 @@
+.ant-layout-has-sider {
+  height: 100vh;
+}
+
+.trigger {
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.trigger:hover {
+  color: #1890ff;
+}
+
+.ant-layout-has-sider {
+
+  .ant-layout-sider-children {
+
+    .logo {
+      margin: 10px;
+  
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+  .ant-layout-header {
+    background: #ffffff;
+    padding: 0;
+  }
+}
+
+
+.admin-content {
+  margin: 24px 16px;
+  padding: 24px;
+  background: #ffffff;
+  min-height: 280px;
+}
