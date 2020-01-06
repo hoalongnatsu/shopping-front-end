@@ -4,11 +4,10 @@ import { batch } from 'react-redux';
 import { message } from 'antd';
 
 /* Interface */
-// import { BrandsState } from 'interface';
+import { BrandsState } from 'interface';
 
 import brands from 'services/brands';
 import { SET_ERROR_MESSAGE } from './feedback';
-import { BrandsState } from 'interface';
 
 export const GET_BRANDS_REQUEST = 'GET_BRANDS_REQUEST';
 export const GET_BRANDS_SUCCESS = 'GET_BRANDS_SUCCESS';

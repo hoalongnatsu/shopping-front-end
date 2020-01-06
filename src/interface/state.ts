@@ -28,10 +28,18 @@ export interface BrandsState {
   logo?: string,
 }
 
+export interface UserState {
+  [username: string]: string,
+  email: string,
+  jwt: string,
+  admin: string
+}
+
 export interface RootState {
   loading: LoadingState,
   errors: ErrorsState,
   feedback: FeedbackState,
+  user: UserState,
   colors: ColorsState[],
   brands: BrandsState[]
 }

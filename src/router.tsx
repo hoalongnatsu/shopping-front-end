@@ -27,16 +27,21 @@ interface Props {
 }
 
 export const routes = [
-  { name: 'Create Color', path: '/colors/create', component: CreateColor, layout: Admin, requireLogin: true },
-  { name: 'Edit Color', path: '/colors/:id/edit', component: EditColor, layout: Admin, requireLogin: true },
-  { name: 'Colors', path: '/colors', component: Colors, layout: Admin, requireLogin: true },
-  { name: 'Create Brand', path: '/brands/create', component: CreateBrand, layout: Admin, requireLogin: true },
-  { name: 'Create Brand', path: '/brands/:id/edit', component: EditBrand, layout: Admin, requireLogin: true },
-  { name: 'Brands', path: '/brands', component: Brands, layout: Admin, requireLogin: true },
-  { name: 'About', path: '/about', component: About, layout: App, requireLogin: false },
-  { name: 'Home', path: '/', component: Home, layout: App, requireLogin: false },
+  /* Admin route */
+  { name: 'Create Color', path: '/colors/create', component: CreateColor, layout: Admin, requireLogin: true, isAdmin: true },
+  { name: 'Edit Color', path: '/colors/:id/edit', component: EditColor, layout: Admin, requireLogin: true, isAdmin: true },
+  { name: 'Colors', path: '/colors', component: Colors, layout: Admin, requireLogin: true, isAdmin: true },
+  { name: 'Create Brand', path: '/brands/create', component: CreateBrand, layout: Admin, requireLogin: true, isAdmin: true },
+  { name: 'Create Brand', path: '/brands/:id/edit', component: EditBrand, layout: Admin, requireLogin: true, isAdmin: true },
+  { name: 'Brands', path: '/brands', component: Brands, layout: Admin, requireLogin: true, isAdmin: true },
+
+  /* Auth */
+  { name: 'Login', path: '/login', component: Login, layout: App, requireLogin: false, isAdmin: false },
+
+  /* App route */
+  { name: 'About', path: '/about', component: About, layout: App, requireLogin: true, isAdmin: false },
+  { name: 'Home', path: '/', component: Home, layout: App, requireLogin: false, isAdmin: false },
   
-  { name: 'Login', path: '/login', component: Login, layout: App, requireLogin: false },
 ];
 
 export const RootRouter: React.FC<Props> = () => (
