@@ -1,25 +1,18 @@
-import './index.scss';
+import './Trash.scss';
 
 import React, { Component } from 'react';
 import { Alert, Table, Icon, Skeleton, Popconfirm } from 'antd';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-
-/* Component */
-import ContentAction from 'pages/Admin/Content/Action';
 
 /* Interface */
 import { RootState, ColorsState } from 'interface';
 
 /* Actions */
-import { get_all_colors, delete_color } from 'actions/colors';
+import { get_trash_colors } from 'actions/trash';
+import { restore_color, remove_color } from 'actions/colors';
 
 /* Helpers */
-import {
-  create_loading_selector,
-  create_error_selector,
-  descending_order_selector
-} from 'helpers/selectors';
+import { create_loading_selector, create_error_selector } from 'helpers/selectors';
 
 const { Column } = Table;
 
@@ -35,8 +28,9 @@ interface StateToProps {
 }
 
 interface DispatchProps {
-  get_all_colors: () => void,
-  delete_color: (_id: string) => void,
+  get_trash_colors: () => void,
+  restore_color: (id: string) => void,
+  remove_color: (id: string) => void,
 }
 
 type Props = ComponentProps & StateToProps & DispatchProps;
@@ -45,17 +39,21 @@ interface State {
   
 }
 
-class Colors extends Component<Props, State> {
+class Trash extends Component<Props, State> {
   state = {}
 
   componentDidMount() {
     if (!this.props.colors.length) {
-      this.props.get_all_colors();
+      this.props.get_trash_colors();
     }
   }
 
-  _confirm_delete_color = (id: string) => {
-    this.props.delete_color(id);
+  _confirm_restore_color = (id: string) => {
+    this.props.restore_color(id);
+  }
+
+  _confirm_remove_color = (id: string) => {
+    this.props.remove_color(id);
   }
 
   _placeholder = (color: string) => (
@@ -64,16 +62,21 @@ class Colors extends Component<Props, State> {
 
   _action = (text: any, record: any) => (
     <div className="table__action">
-      <Link to={`/colors/${record._id}/edit`}>
-        <Icon type="edit" theme="filled" style={{color: "#6EB2FB", cursor: "pointer", fontSize: 16}} />
-      </Link>
       <Popconfirm
-        title="Are you sure delete this color?"
+        title="Are you sure restore this color?"
         okText="Yes"
         cancelText="No"
-        onConfirm={() => this._confirm_delete_color(record._id)}
+        onConfirm={() => this._confirm_restore_color(record._id)}
       >
-        <Icon type="delete" theme="filled" style={{color: "#6EB2FB", cursor: "pointer", fontSize: 16}} />
+        <Icon type="rest" theme="filled" style={{color: "var(--color-blue)", cursor: "pointer", fontSize: 16}} />
+      </Popconfirm>
+      <Popconfirm
+        title="Are you sure remove this color?"
+        okText="Yes"
+        cancelText="No"
+        onConfirm={() => this._confirm_remove_color(record._id)}
+      >
+        <Icon type="delete" theme="filled" style={{color: "var(--color-red)", cursor: "pointer", fontSize: 16}} />
       </Popconfirm>
     </div>
   )
@@ -85,7 +88,6 @@ class Colors extends Component<Props, State> {
       <Skeleton loading={loading} active={true}>
         <>
           {error && <Alert message={message} type="error" closable={true} style={{marginBottom: 12}} />}
-          <ContentAction to="/colors/create" />
           <div className="content-table">
             <Table dataSource={colors} rowKey={record => record.code} >
               <Column title="Name" dataIndex="name" key="name" />
@@ -109,16 +111,15 @@ class Colors extends Component<Props, State> {
   }
 }
 
-const descending_colors_selector = descending_order_selector();
 const mapStateToProps = (state: RootState) => {
-  const { loading, errors, feedback } = state;
+  const { trash, loading, errors, feedback } = state;
 
   return {
-    colors: descending_colors_selector(state, 'colors'),
-    loading: create_loading_selector(['GET_COLORS'])(loading),
-    error: create_error_selector(['GET_COLORS', 'DELETE_COLOR'])(errors),
+    colors: trash.colors,
+    loading: create_loading_selector(['GET_TRASH_COLORS'])(loading),
+    error: create_error_selector(['GET_TRASH_COLORS', 'RESTORE_COLOR', 'REMOVE_COLOR'])(errors),
     message: feedback.error
   }
 }
 
-export default connect(mapStateToProps, { get_all_colors, delete_color })(Colors);
+export default connect(mapStateToProps, { get_trash_colors, restore_color, remove_color })(Trash);

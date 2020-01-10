@@ -13,7 +13,7 @@ import { RootState } from 'interface';
 import { login, register } from 'actions/user';
 
 /* Helpers */
-import { create_loading_selector, create_error_selector } from 'helpers/selectors';
+import { create_loading_selector } from 'helpers/selectors';
 
 /* Enum */
 import { AuthForm } from 'constant-app';
@@ -26,7 +26,7 @@ interface ComponentProps {
 
 interface StateToProps {
   loading: boolean,
-  error: boolean,
+  errors: any,
   message: string
 }
 
@@ -38,13 +38,15 @@ interface DispacthToProps {
 type Props = FormComponentProps & RouteComponentProps & ComponentProps & StateToProps & DispacthToProps;
 
 interface State {
-  submitted: boolean,
+  loginSubmitted: boolean,
+  registerSubmitted: boolean,
   form: AuthForm
 }
 
 class Login extends Component<Props, State> {
   state = {
-    submitted: false,
+    loginSubmitted: false,
+    registerSubmitted: false,
     form: AuthForm.LOGIN
   }
 
@@ -55,18 +57,19 @@ class Login extends Component<Props, State> {
   }
 
   _change = () => {
-    const { submitted } = this.state;
-    if (submitted) this.setState({submitted: false});
+    const { loginSubmitted, registerSubmitted } = this.state;
+    if (loginSubmitted) this.setState({loginSubmitted: false});
+    if (registerSubmitted) this.setState({registerSubmitted: false});
   }
 
   _changeForm = () => {
     const { form } = this.state;
     if (form === AuthForm.LOGIN) {
-      this.setState({form: AuthForm.REGISTER});
+      this.setState({form: AuthForm.REGISTER, loginSubmitted: false, registerSubmitted: false});
       return;
     }
 
-    this.setState({form: AuthForm.LOGIN});
+    this.setState({form: AuthForm.LOGIN, loginSubmitted: false, registerSubmitted: false});
   }
 
   _submit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -78,26 +81,29 @@ class Login extends Component<Props, State> {
       if (!err) {
         if (formType === AuthForm.LOGIN) {
           login(values, history);
+          this.setState({loginSubmitted: true})
         } else {
           register(values, history);
+          this.setState({registerSubmitted: true})
         }
-
-        this.setState({submitted: true})
       }
     })
   }
 
   render() {
-    const { loading, error, message } = this.props;
+    const { loading, errors, message } = this.props;
     const { getFieldDecorator } = this.props.form;
-    const { submitted, form } = this.state;
+    const { loginSubmitted, registerSubmitted, form } = this.state;
 
     return (
       <section className="auth-page">
         <Card className="form-container">
           <Title level={3} className="title">{form}</Title>
           {
-            submitted && error && <Alert message={message} type="error" style={{marginBottom: 12}} />
+            loginSubmitted && errors['LOGIN'] && <Alert message={message} type="error" style={{marginBottom: 12}} />
+          }
+          {
+            registerSubmitted && errors['REGISTER'] && <Alert message={message} type="error" style={{marginBottom: 12}} />
           }
           <Form onSubmit={this._submit}>
             <Form.Item>
@@ -182,8 +188,8 @@ const mapStateToProps = (state: RootState) => {
   const { loading, errors, feedback } = state;
 
   return {
+    errors,
     loading: create_loading_selector(['LOGIN', 'REGISTER'])(loading),
-    error: create_error_selector(['LOGIN', 'REGISTER'])(errors),
     message: feedback.error
   }
 }

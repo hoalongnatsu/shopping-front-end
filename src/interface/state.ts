@@ -35,11 +35,17 @@ export interface UserState {
   admin: string
 }
 
+export interface TrashState {
+  colors: ColorsState[],
+  brands: BrandsState[],
+}
+
 export interface RootState {
   loading: LoadingState,
   errors: ErrorsState,
   feedback: FeedbackState,
   user: UserState,
   colors: ColorsState[],
-  brands: BrandsState[]
+  brands: BrandsState[],
+  trash: TrashState
 }

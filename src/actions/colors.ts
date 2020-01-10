@@ -21,6 +21,12 @@ export const UPDATE_COLOR_FAILURE = 'UPDATE_COLOR_FAILURE';
 export const DELETE_COLOR_REQUEST = 'DELETE_COLOR_REQUEST';
 export const DELETE_COLOR_SUCCESS = 'DELETE_COLOR_SUCCESS';
 export const DELETE_COLOR_FAILURE = 'DELETE_COLOR_FAILURE';
+export const RESTORE_COLOR_REQUEST = 'RESTORE_COLOR_REQUEST';
+export const RESTORE_COLOR_SUCCESS = 'RESTORE_COLOR_SUCCESS';
+export const RESTORE_COLOR_FAILURE = 'RESTORE_COLOR_FAILURE';
+export const REMOVE_COLOR_REQUEST = 'REMOVE_COLOR_REQUEST';
+export const REMOVE_COLOR_SUCCESS = 'REMOVE_COLOR_SUCCESS';
+export const REMOVE_COLOR_FAILURE = 'REMOVE_COLOR_FAILURE';
 
 export function get_all_colors(): ThunkAction<void, {}, {}, AnyAction> {
   return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
@@ -120,6 +126,50 @@ export function delete_color(id: string): ThunkAction<void, {}, {}, AnyAction> {
     }).catch((e) => {
       batch(() => {
         dispatch({type: DELETE_COLOR_FAILURE})
+        dispatch({
+          type: SET_ERROR_MESSAGE,
+          payload: 'Something went wrong please create again later!'
+        })
+      })
+    })
+  }
+}
+
+export function restore_color(id: string): ThunkAction<void, {}, {}, AnyAction> {
+  return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+    dispatch({type: RESTORE_COLOR_REQUEST});
+
+    colors.restore_color(id).then((color) => {
+      dispatch({
+        type: RESTORE_COLOR_SUCCESS,
+        payload: color
+      })
+      message.success('Restore succesfully');
+    }).catch((e) => {
+      batch(() => {
+        dispatch({type: RESTORE_COLOR_FAILURE})
+        dispatch({
+          type: SET_ERROR_MESSAGE,
+          payload: 'Something went wrong please create again later!'
+        })
+      })
+    })
+  }
+}
+
+export function remove_color(id: string): ThunkAction<void, {}, {}, AnyAction> {
+  return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+    dispatch({type: REMOVE_COLOR_REQUEST});
+
+    colors.remove_color(id).then((id) => {
+      dispatch({
+        type: REMOVE_COLOR_SUCCESS,
+        payload: id
+      })
+      message.success('Remove succesfully');
+    }).catch((e) => {
+      batch(() => {
+        dispatch({type: REMOVE_COLOR_FAILURE})
         dispatch({
           type: SET_ERROR_MESSAGE,
           payload: 'Something went wrong please create again later!'

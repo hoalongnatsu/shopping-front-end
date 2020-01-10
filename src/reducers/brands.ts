@@ -5,7 +5,8 @@ import {
   GET_BRANDS_SUCCESS,
   CREATE_BRAND_SUCCESS,
   UPDATE_BRAND_SUCCESS,
-  DELETE_BRAND_SUCCESS
+  DELETE_BRAND_SUCCESS,
+  RESTORE_BRAND_SUCCESS
 } from 'actions/brands';
 
 const initialState: BrandsState[] = [];
@@ -27,6 +28,9 @@ export default function brands(state: BrandsState[] = initialState, action: Acti
     }
     case DELETE_BRAND_SUCCESS: {
       return state.filter((brand) => brand._id !== action.payload);
+    }
+    case RESTORE_BRAND_SUCCESS: {
+      return state.length ? [...state, action.payload] : state;
     }
     default:
       return state;

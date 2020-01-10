@@ -5,7 +5,8 @@ import {
   GET_COLORS_SUCCESS,
   CREATE_COLOR_SUCCESS,
   UPDATE_COLOR_SUCCESS,
-  DELETE_COLOR_SUCCESS
+  DELETE_COLOR_SUCCESS,
+  RESTORE_COLOR_SUCCESS
 } from 'actions/colors';
 
 const initialState: ColorsState[] = [];
@@ -27,6 +28,9 @@ export default function colors(state: ColorsState[] = initialState, action: Acti
     }
     case DELETE_COLOR_SUCCESS: {
       return state.filter((color) => color._id !== action.payload);
+    }
+    case RESTORE_COLOR_SUCCESS: {
+      return state.length ? [...state, action.payload] : state;
     }
     default:
       return state;

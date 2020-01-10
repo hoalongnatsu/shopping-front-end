@@ -14,9 +14,11 @@ import NotFound from 'pages/NotFound';
 const Home = React.lazy(() => import('pages/Home'));
 const About = React.lazy(() => import('pages/About'));
 const Colors = React.lazy(() => import('pages/Admin/Colors'));
+const TrashColors = React.lazy(() => import('pages/Admin/Colors/Trash'));
 const CreateColor = React.lazy(() => import('pages/Admin/Colors/Create'));
 const EditColor = React.lazy(() => import('pages/Admin/Colors/Edit'));
 const Brands = React.lazy(() => import('pages/Admin/Brands'));
+const TrashBrands = React.lazy(() => import('pages/Admin/Brands/Trash'));
 const CreateBrand = React.lazy(() => import('pages/Admin/Brands/Create'));
 const EditBrand = React.lazy(() => import('pages/Admin/Brands/Edit'));
 
@@ -34,6 +36,10 @@ export const routes = [
   { name: 'Create Brand', path: '/brands/create', component: CreateBrand, layout: Admin, requireLogin: true, isAdmin: true },
   { name: 'Create Brand', path: '/brands/:id/edit', component: EditBrand, layout: Admin, requireLogin: true, isAdmin: true },
   { name: 'Brands', path: '/brands', component: Brands, layout: Admin, requireLogin: true, isAdmin: true },
+
+  /* Trash */
+  { name: 'Colors', path: '/trash/colors', component: TrashColors, layout: Admin, requireLogin: true, isAdmin: true },
+  { name: 'Colors', path: '/trash/brands', component: TrashBrands, layout: Admin, requireLogin: true, isAdmin: true },
 
   /* Auth */
   { name: 'Login', path: '/login', component: Login, layout: App, requireLogin: false, isAdmin: false },

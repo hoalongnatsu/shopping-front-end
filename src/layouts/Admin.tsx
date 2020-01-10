@@ -8,10 +8,15 @@ import { Layout, Menu, Icon } from 'antd';
 import logo from 'assets/icons/logo_transparent.png';
 
 const { Header, Sider, Content } = Layout;
+const { SubMenu } = Menu;
 const sidebar = [
-  { name: 'Colors', to: '/colors', icon: 'bg-colors' },
-  { name: 'Brands', to: '/brands', icon: 'sketch' }
-]
+  { name: 'Colors', icon: 'bg-colors', to: '/colors' },
+  { name: 'Brands', icon: 'sketch', to: '/brands' }
+];
+const trash = [
+  { name: 'Colors', to: '/trash/colors' },
+  { name: 'Brands', to: '/trash/brands' }
+];
 
 interface ComponentProps {
   
@@ -32,9 +37,13 @@ class Admin extends Component<Props, State> {
     this.setState({ collapsed: !this.state.collapsed });
   }
 
-  selectedKeys = (): string => {
-    const key = /^\/[a-zA-Z]*/.exec(this.props.location.pathname);
-    return key ? key[0] : ''
+  active = (): string[] => {
+    const { pathname } = this.props.location;
+    if (pathname.includes('trash')) {
+      return [pathname, 'trash'];
+    }
+    const key = /^\/[a-zA-Z]*/.exec(pathname);
+    return key ? [key[0], ''] : ['', '']
   }
 
   changePage = (item: any) => {
@@ -45,7 +54,7 @@ class Admin extends Component<Props, State> {
 
   render() {
     const { collapsed } = this.state;
-    const selectedKeys = this.selectedKeys();
+    const [selectedKeys, openKeys] = this.active();
 
     return (
       <Layout>
@@ -53,7 +62,7 @@ class Admin extends Component<Props, State> {
           <div className="logo">
             <img src={logo} alt="logo" />
           </div>
-          <Menu theme="dark" mode="inline" onClick={this.changePage} selectedKeys={[selectedKeys]}>
+          <Menu theme="dark" mode="inline" onClick={this.changePage} defaultSelectedKeys={[selectedKeys]} defaultOpenKeys={[openKeys]}>
             {
               sidebar.map(({name, to, icon}) => (
                 <Menu.Item key={to}>
@@ -62,6 +71,23 @@ class Admin extends Component<Props, State> {
                 </Menu.Item>
               ))
             }
+            <SubMenu
+              key="trash"
+              title={
+                <span>
+                  <Icon type="delete" />
+                  <span>Trash</span>
+                </span>
+              }
+            >
+              {
+                trash.map(({name, to}) => (
+                  <Menu.Item key={to}>
+                    <span>{name}</span>
+                  </Menu.Item>
+                ))
+              }
+            </SubMenu>
           </Menu>
         </Sider>
         <Layout>
