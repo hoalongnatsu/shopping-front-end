@@ -7,14 +7,11 @@ import { Skeleton } from 'antd';
 import { FormType } from 'constant-app';
 
 /* Components */
-const CreateEditColorForm = React.lazy(() => import('components/CreateEditForm/Color'));
+const CreateEditProductForm = React.lazy(() => import('components/CreateEditForm/Product'));
 
-interface StateToProps {
-  error: boolean,
-  message: string
+interface Props {
+  
 }
-
-type Props = StateToProps;
 
 interface State {
   
@@ -26,7 +23,7 @@ class Create extends Component<Props, State> {
   render() {
     return (
       <Suspense fallback={<Skeleton />}>
-        <CreateEditColorForm formType={FormType.CREATE} />
+        <CreateEditProductForm formType={FormType.CREATE} />
       </Suspense>
     )
   }

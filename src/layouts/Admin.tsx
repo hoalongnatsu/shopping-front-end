@@ -10,12 +10,13 @@ import logo from 'assets/icons/logo_transparent.png';
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
 const sidebar = [
-  { name: 'Colors', icon: 'bg-colors', to: '/colors' },
-  { name: 'Brands', icon: 'sketch', to: '/brands' }
+  { name: 'Colors', icon: 'bg-colors', to: '/admin/colors' },
+  { name: 'Brands', icon: 'sketch', to: '/admin/brands' },
+  { name: 'Products', icon: 'shop', to: '/admin/products' },
 ];
 const trash = [
-  { name: 'Colors', to: '/trash/colors' },
-  { name: 'Brands', to: '/trash/brands' }
+  { name: 'Colors', to: '/admin/trash/colors' },
+  { name: 'Brands', to: '/admin/trash/brands' }
 ];
 
 interface ComponentProps {
@@ -42,7 +43,7 @@ class Admin extends Component<Props, State> {
     if (pathname.includes('trash')) {
       return [pathname, 'trash'];
     }
-    const key = /^\/[a-zA-Z]*/.exec(pathname);
+    const key = /^\/admin\/[a-zA-Z]*/.exec(pathname);
     return key ? [key[0], ''] : ['', '']
   }
 

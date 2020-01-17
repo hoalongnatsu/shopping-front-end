@@ -58,7 +58,7 @@ export function create_brand(brand: BrandsState, history: any): ThunkAction<void
         type: CREATE_BRAND_SUCCESS,
         payload: brand
       })
-      history.push('/brands');
+      history.push('/admin/brands');
     }).catch(({response}) => {
       if (response.status === 422) {
         batch(() => {
@@ -91,7 +91,7 @@ export function update_brand(id: any, brand: BrandsState, history: any): ThunkAc
         type: UPDATE_BRAND_SUCCESS,
         payload: brand
       })
-      history.push('/brands');
+      history.push('/admin/brands');
     }).catch(({response}) => {
       if (response.status === 422) {
         batch(() => {

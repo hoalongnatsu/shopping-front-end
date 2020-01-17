@@ -85,7 +85,7 @@ class Colors extends Component<Props, State> {
       <Skeleton loading={loading} active={true}>
         <>
           {error && <Alert message={message} type="error" closable={true} style={{marginBottom: 12}} />}
-          <ContentAction to="/colors/create" />
+          <ContentAction to="/admin/colors/create" />
           <div className="content-table">
             <Table dataSource={colors} rowKey={record => record.code} >
               <Column title="Name" dataIndex="name" key="name" />

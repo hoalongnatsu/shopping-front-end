@@ -58,7 +58,7 @@ export function create_color(color: ColorsState, history: any): ThunkAction<void
         type: CREATE_COLOR_SUCCESS,
         payload: color
       })
-      history.push('/colors');
+      history.push('/admin/colors');
     }).catch(({response}) => {
       if (response.status === 422) {
         batch(() => {
@@ -90,7 +90,7 @@ export function update_color(id: any, color: ColorsState, history: any): ThunkAc
         type: UPDATE_COLOR_SUCCESS,
         payload: color
       })
-      history.push('/colors');
+      history.push('/admin/colors');
     }).catch(({response}) => {
       if (response.status === 422) {
         batch(() => {

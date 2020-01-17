@@ -83,7 +83,7 @@ class Brands extends Component<Props, State> {
       <Skeleton loading={loading} active={true}>
         <>
           {error && <Alert message={message} type="error" closable={true} style={{marginBottom: 12}} />}
-          <ContentAction to="/brands/create" />
+          <ContentAction to="/admin/brands/create" />
           <div className="content-table">
             <Table dataSource={brands} rowKey={record => record.name} >
               <Column title="Name" dataIndex="name" key="name" />

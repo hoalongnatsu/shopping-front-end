@@ -1,0 +1,31 @@
+.colors-placeholder {
+  display: flex;
+  flex-wrap: wrap;
+
+  &__item {
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+  
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+  
+    &::after {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(#D92434, .2);
+      transform: scale(0);
+    }
+    
+    &.active::after, &:hover::after {
+      transition: all .3s ease;
+      transform: scale(1.4);
+    }
+  }
+}
