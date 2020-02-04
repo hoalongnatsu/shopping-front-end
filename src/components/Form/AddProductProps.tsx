@@ -1,8 +1,8 @@
 import './AddProductProps.scss';
 
 import React, { Component } from 'react';
-import { Form, Button, Upload, Icon } from 'antd';
-import { FormComponentProps } from 'antd/es/form';
+import { Button } from 'antd';
+import isequal from 'lodash.isequal';
 
 /* Interface */
 import { ColorsState, ProductPropValues } from 'interface';
@@ -11,20 +11,19 @@ import { ColorsState, ProductPropValues } from 'interface';
 import Label from 'components/Label';
 import ColorsPlaceholderItem from 'components/ColorsPlaceholder/Item';
 import ImagesReview from 'components/ImagesReview';
+import FormUploadProductImage from 'components/Form/UploadProductImage';
 
 /* Constant */
 import { SIZES } from 'constant-app';
 
-const API = process.env.REACT_APP_API_URL;
-
 interface ComponentProps {
-  values?: ProductPropValues | null,
+  values: ProductPropValues,
   color: ColorsState,
   deleteColor: (id: any) => void,
   getProductProps: (color_id: string, productProps: ProductPropValues) => void
 }
 
-type Props = FormComponentProps & ComponentProps;
+type Props = ComponentProps;
 
 interface State {
   sizesActive: string[],
@@ -45,6 +44,13 @@ class AddProductProps extends Component<Props, State> {
 
       this.setState({sizesActive: size, images});
     }
+  }
+
+  shouldComponentUpdate({values: nextValues}: Props, nextState: State) {
+    const { values } = this.props;
+    const isPropsChange = !isequal(values, nextValues);
+    const isStateChange = !isequal(this.state, nextState);
+    return isPropsChange || isStateChange;
   }
 
   allowEdit = () => {
@@ -72,11 +78,7 @@ class AddProductProps extends Component<Props, State> {
     this.setState({images: newImages});
   }
 
-  _getFilePreview = (e: any) => {
-    return e && e.fileList;
-  }
-
-  _uploadChange = (info: any) => {
+  uploadChange = (info: any) => {
     if (info.file.response) { // success upload
       const { filename } = info.file.response;
       const { images } = this.state;
@@ -101,7 +103,6 @@ class AddProductProps extends Component<Props, State> {
 
   render() {
     const { color, deleteColor } = this.props;
-    const { getFieldDecorator } = this.props.form;
     const { sizesActive, edit, images } = this.state;
 
     return (
@@ -109,7 +110,7 @@ class AddProductProps extends Component<Props, State> {
         {
           edit === false && <div className="disable" />
         }
-        <ColorsPlaceholderItem style={{background: color.code}} />
+        <ColorsPlaceholderItem color={color.code} />
         <Label name="Pick size" required={true} />
         <div className="size">
           {
@@ -126,30 +127,7 @@ class AddProductProps extends Component<Props, State> {
         </div>
         <Label name="Images" />
         <ImagesReview images={images} onDelete={this.deleteImage} />
-        <Form>
-          <Form.Item label="Upload Images">
-            {
-              getFieldDecorator(`images_${color.code}`, {
-                valuePropName: 'fileList',
-                rules: [{ required: true, message: 'This field is required.' }],
-                getValueFromEvent: this._getFilePreview,
-              })(
-                <Upload
-                  id={color._id}
-                  name="logo"
-                  action={`${API}/photos/upload`}
-                  multiple={true}
-                  onChange={this._uploadChange}
-                  showUploadList={false}
-                >
-                  <Button>
-                    <Icon type="upload" /> Click to upload
-                  </Button>
-                </Upload>
-              )
-            }
-          </Form.Item>
-        </Form>
+        <FormUploadProductImage code={color.code} uploadChange={this.uploadChange} />
         {
           edit ? (
             <>
@@ -174,4 +152,4 @@ class AddProductProps extends Component<Props, State> {
   }
 }
 
-export default Form.create<Props>()(AddProductProps);
+export default AddProductProps;

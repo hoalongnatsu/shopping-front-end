@@ -1,6 +1,6 @@
 import './index.scss';
 
-import React, { PureComponent } from 'react';
+import React from 'react';
 
 import { ColorsState } from 'interface';
 
@@ -12,31 +12,20 @@ interface Props {
   setActive: (index: number) => void
 }
 
-interface State {
+const ColorsPlaceholder: React.FC<Props> = ({colors, active, setActive}) => (
+  <div className="colors-placeholder">
+    {
+      colors.map((color, index) => (
+        <Item
+          key={color._id}
+          color={color.code}
+          active={active === index}
+          index={index}
+          setActive={setActive}
+        />
+      ))
+    }
+  </div>
+)
 
-}
-
-class ColorsPlaceholder extends PureComponent<Props, State> {
-  state = {}
-
-  render() {
-    const { colors, active, setActive } = this.props;
-
-    return (
-      <div className="colors-placeholder">
-        {
-          colors.map((color, index) => (
-            <Item
-              key={color._id}
-              active={active === index}
-              style={{background: color.code}}
-              onClick={() => setActive(index)}
-            />
-          ))
-        }
-      </div>
-    )
-  }
-}
-
-export default ColorsPlaceholder;
+export default React.memo(ColorsPlaceholder);

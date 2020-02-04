@@ -62,7 +62,7 @@ class Colors extends Component<Props, State> {
   }
 
   _placeholder = (color: string) => (
-    <ColorsPlaceholderItem style={{background: color}} />
+    <ColorsPlaceholderItem color={color} />
   )
 
   _action = (text: any, record: any) => (
