@@ -86,7 +86,7 @@ class Color extends Component<Props, State> {
   }
 
   _cancel = () => {
-    this.props.history.push('/colors');
+    this.props.history.push('/admin/colors');
   }
 
   render() {

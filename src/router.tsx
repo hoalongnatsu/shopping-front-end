@@ -26,6 +26,7 @@ const CreateBrand = React.lazy(() => import('pages/Admin/Brands/Create'));
 const EditBrand = React.lazy(() => import('pages/Admin/Brands/Edit'));
 const Products = React.lazy(() => import('pages/Admin/Products'));
 const CreateProducts = React.lazy(() => import('pages/Admin/Products/Create'));
+const EditProducts = React.lazy(() => import('pages/Admin/Products/Edit'));
 
 const Login = React.lazy(() => import('pages/Login'));
 
@@ -39,15 +40,17 @@ export const routes = [
   { name: 'Edit Color', path: '/admin/colors/:id/edit', component: EditColor, layout: Admin, requireLogin: true, isAdmin: true },
   { name: 'Colors', path: '/admin/colors', component: Colors, layout: Admin, requireLogin: true, isAdmin: true },
   { name: 'Create Brand', path: '/admin/brands/create', component: CreateBrand, layout: Admin, requireLogin: true, isAdmin: true },
-  { name: 'Create Brand', path: '/admin/brands/:id/edit', component: EditBrand, layout: Admin, requireLogin: true, isAdmin: true },
+  { name: 'Edit Brand', path: '/admin/brands/:id/edit', component: EditBrand, layout: Admin, requireLogin: true, isAdmin: true },
   { name: 'Brands', path: '/admin/brands', component: Brands, layout: Admin, requireLogin: true, isAdmin: true },
   { name: 'Create Product', path: '/admin/products/create', component: CreateProducts, layout: Admin, requireLogin: true, isAdmin: true },
+  { name: 'Edit Product', path: '/admin/products/:id/edit', component: EditProducts, layout: Admin, requireLogin: true, isAdmin: true },
   { name: 'Products', path: '/admin/products', component: Products, layout: Admin, requireLogin: true, isAdmin: true },
-  { name: 'Admin', path: '/admin', component: AdminPage, layout: Admin, requireLogin: true, isAdmin: true },
-
+  
   /* Trash */
   { name: 'Colors', path: '/admin/trash/colors', component: TrashColors, layout: Admin, requireLogin: true, isAdmin: true },
   { name: 'Colors', path: '/admin/trash/brands', component: TrashBrands, layout: Admin, requireLogin: true, isAdmin: true },
+  
+  { name: 'Admin', path: '/admin', component: AdminPage, layout: Admin, requireLogin: true, isAdmin: true },
 
   /* Auth */
   { name: 'Login', path: '/login', component: Login, layout: App, requireLogin: false, isAdmin: false },

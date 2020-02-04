@@ -1,6 +1,38 @@
-.form-add-color, .form-add-props {
+.form-add-color {
   margin-top: 10px;
   padding: 10px;
   border: 1px solid var(--color-dark-quaternary);
   border-radius: 5px;
+}
+
+.wrapper-editor {
+  margin-bottom: 15px;
+}
+
+.home-editor {
+  border: 1px solid #F1F1F1;
+  padding: 0 15px;
+  border-radius: 2px;
+  height: 150px;
+  overflow: auto;
+
+  .DraftEditor-root {
+    height: auto;
+  }
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 4px rgba(#001529, 0.3);
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: rgba(#001529, 0.6); 
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(#001529, 0.8); 
+  }
 }

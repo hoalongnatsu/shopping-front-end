@@ -20,7 +20,8 @@ import { create_loading_selector, create_error_selector } from 'helpers/selector
 
 const { Title } = Typography;
 const API = process.env.REACT_APP_API_URL;
-const IMAGE_URL = process.env.REACT_APP_IMAGE_URL;
+const { REACT_APP_IMAGE_URL, REACT_APP_SERVER_BRAND_IMAGE_FOLDER } = process.env;
+const IMAGE_URL = `${REACT_APP_IMAGE_URL}/${REACT_APP_SERVER_BRAND_IMAGE_FOLDER}`;
 
 interface ComponentProps {
   formType: FormType,
@@ -52,12 +53,11 @@ export class Brand extends Component<Props, State> {
   }
 
   componentDidMount() {
-    const { formType, brand, form } = this.props;
+    const { formType, form } = this.props;
     
     if (formType === FormType.EDIT) {
-      form.setFieldsValue({
-        name: brand && brand.name,
-      })
+      const { name } = this.props.brand as BrandsState;
+      form.setFieldsValue({name});
     }
   }
 
@@ -71,12 +71,10 @@ export class Brand extends Component<Props, State> {
 
     form.validateFields((err, {name, logo: logos}) => {
       if (!err) {
-        let destination, filename, logo, newBrand: BrandsState;
+        let logo, newBrand: BrandsState;
 
         if (logos && logos[0].status === 'done') {
-          destination = logos[0].response.destination;
-          filename = logos[0].response.filename;
-          logo = `${destination}/${filename}`;
+          logo = logos[0].response.filename;
           newBrand = { name, logo };
         } else {
           newBrand = { name };
@@ -105,7 +103,7 @@ export class Brand extends Component<Props, State> {
   }
 
   _cancel = () => {
-    this.props.history.push('/brands');
+    this.props.history.push('/admin/brands');
   }
 
   render() {

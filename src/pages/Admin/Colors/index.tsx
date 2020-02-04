@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 
 /* Component */
 import ContentAction from 'pages/Admin/Content/Action';
+import ColorsPlaceholderItem from 'components/ColorsPlaceholder/Item';
 
 /* Interface */
 import { RootState, ColorsState } from 'interface';
@@ -49,8 +50,10 @@ class Colors extends Component<Props, State> {
   state = {}
 
   componentDidMount() {
-    if (!this.props.colors.length) {
-      this.props.get_all_colors();
+    const { colors, get_all_colors } = this.props;
+
+    if (colors.length === 0) {
+      get_all_colors()
     }
   }
 
@@ -59,12 +62,12 @@ class Colors extends Component<Props, State> {
   }
 
   _placeholder = (color: string) => (
-    <Icon type="qq" style={{color, fontSize: 26}} />
+    <ColorsPlaceholderItem style={{background: color}} />
   )
 
   _action = (text: any, record: any) => (
     <div className="table__action">
-      <Link to={`/colors/${record._id}/edit`}>
+      <Link to={`/admin/colors/${record._id}/edit`}>
         <Icon type="edit" theme="filled" style={{color: "#6EB2FB", cursor: "pointer", fontSize: 16}} />
       </Link>
       <Popconfirm

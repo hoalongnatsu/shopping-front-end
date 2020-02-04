@@ -128,7 +128,7 @@ export function delete_color(id: string): ThunkAction<void, {}, {}, AnyAction> {
         dispatch({type: DELETE_COLOR_FAILURE})
         dispatch({
           type: SET_ERROR_MESSAGE,
-          payload: 'Something went wrong please create again later!'
+          payload: 'Something went wrong please try again later!'
         })
       })
     })
@@ -150,7 +150,7 @@ export function restore_color(id: string): ThunkAction<void, {}, {}, AnyAction> 
         dispatch({type: RESTORE_COLOR_FAILURE})
         dispatch({
           type: SET_ERROR_MESSAGE,
-          payload: 'Something went wrong please create again later!'
+          payload: 'Something went wrong please try again later!'
         })
       })
     })
@@ -172,7 +172,7 @@ export function remove_color(id: string): ThunkAction<void, {}, {}, AnyAction> {
         dispatch({type: REMOVE_COLOR_FAILURE})
         dispatch({
           type: SET_ERROR_MESSAGE,
-          payload: 'Something went wrong please create again later!'
+          payload: 'Something went wrong please try again later!'
         })
       })
     })

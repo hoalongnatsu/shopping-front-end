@@ -4,7 +4,7 @@ import React from 'react';
 
 interface Props {
   name: string,
-  required: boolean
+  required?: boolean
 }
 
 const Label: React.FC<Props> = ({name, required}) => (

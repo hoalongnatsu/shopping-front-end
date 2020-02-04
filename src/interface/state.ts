@@ -40,6 +40,26 @@ export interface TrashState {
   brands: BrandsState[],
 }
 
+export interface ProductPropValues {
+  size: string[],
+  images: string[],
+}
+
+export interface ProductProps {
+  [color_id: string]: ProductPropValues
+}
+
+export interface ProductState {
+  _id?: string,
+  name: string,
+  brand: BrandsState,
+  descripsion: string,
+  colors: ColorsState[],
+  price: number,
+  sale: number,
+  props: ProductProps
+}
+
 export interface RootState {
   loading: LoadingState,
   errors: ErrorsState,
@@ -47,5 +67,6 @@ export interface RootState {
   user: UserState,
   colors: ColorsState[],
   brands: BrandsState[],
+  products: ProductState[],
   trash: TrashState
 }

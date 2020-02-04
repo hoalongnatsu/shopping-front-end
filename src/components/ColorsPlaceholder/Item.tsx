@@ -1,3 +1,5 @@
+import './Item.scss';
+
 import React from 'react';
 
 interface Props {
@@ -6,7 +8,7 @@ interface Props {
 
 const Item: React.FC<Props & React.HTMLAttributes<HTMLDivElement>> = ({active, ...rest}) => (
   <div
-    className={active ? "colors-placeholder__item active": "colors-placeholder__item"}
+    className={active ? "colors-placeholder__item active" : "colors-placeholder__item"}
     {...rest}
   />
 )

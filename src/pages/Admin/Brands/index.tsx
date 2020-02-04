@@ -22,7 +22,8 @@ import {
 } from 'helpers/selectors';
 
 const { Column } = Table;
-const IMAGE_URL = process.env.REACT_APP_IMAGE_URL;
+const { REACT_APP_IMAGE_URL, REACT_APP_SERVER_BRAND_IMAGE_FOLDER } = process.env;
+const IMAGE_URL = `${REACT_APP_IMAGE_URL}/${REACT_APP_SERVER_BRAND_IMAGE_FOLDER}`;
 
 interface ComponentProps {
   
@@ -51,6 +52,7 @@ class Brands extends Component<Props, State> {
 
   componentDidMount() {
     const { brands, get_all_brands } = this.props;
+
     if (brands.length === 0) {
       get_all_brands()
     }
@@ -62,7 +64,7 @@ class Brands extends Component<Props, State> {
 
   _action = (text: any, record: any) => (
     <div className="table__action">
-      <Link to={`/brands/${record._id}/edit`}>
+      <Link to={`/admin/brands/${record._id}/edit`}>
         <Icon type="edit" theme="filled" style={{color: "#6EB2FB", cursor: "pointer", fontSize: 16}} />
       </Link>
       <Popconfirm

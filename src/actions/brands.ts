@@ -129,7 +129,7 @@ export function delete_brand(id: string): ThunkAction<void, {}, {}, AnyAction> {
         dispatch({type: DELETE_BRAND_FAILURE})
         dispatch({
           type: SET_ERROR_MESSAGE,
-          payload: 'Something went wrong please create again later!'
+          payload: 'Something went wrong please try again later!'
         })
       })
     })
@@ -151,7 +151,7 @@ export function restore_brand(id: string): ThunkAction<void, {}, {}, AnyAction> 
         dispatch({type: RESTORE_BRAND_FAILURE})
         dispatch({
           type: SET_ERROR_MESSAGE,
-          payload: 'Something went wrong please create again later!'
+          payload: 'Something went wrong please try again later!'
         })
       })
     })
@@ -173,7 +173,7 @@ export function remove_brand(id: string): ThunkAction<void, {}, {}, AnyAction> {
         dispatch({type: REMOVE_BRAND_FAILURE})
         dispatch({
           type: SET_ERROR_MESSAGE,
-          payload: 'Something went wrong please create again later!'
+          payload: 'Something went wrong please try again later!'
         })
       })
     })
