@@ -22,6 +22,11 @@ export interface ColorsState {
   code: string,
 }
 
+export interface CategorySate {
+  _id?: string,
+  name: string,
+}
+
 export interface BrandsState {
   _id?: string,
   name: string,
@@ -52,6 +57,7 @@ export interface ProductProps {
 export interface ProductState {
   _id?: string,
   name: string,
+  category: CategorySate,
   brand: BrandsState,
   descripsion: string,
   colors: ColorsState[],
@@ -66,6 +72,7 @@ export interface RootState {
   feedback: FeedbackState,
   user: UserState,
   colors: ColorsState[],
+  categories: CategorySate[],
   brands: BrandsState[],
   products: ProductState[],
   trash: TrashState

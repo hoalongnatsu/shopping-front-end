@@ -7,6 +7,7 @@ import loading from './loading';
 import errors from './errors';
 import feedback from './feedback';
 import colors from './colors';
+import categories from './categories';
 import brands from './brands';
 import products from './products';
 import user from './user';
@@ -18,6 +19,7 @@ export default combineReducers<RootState>({
   feedback,
   user,
   colors,
+  categories,
   brands,
   products,
   trash

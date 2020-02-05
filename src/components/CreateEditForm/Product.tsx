@@ -22,7 +22,7 @@ import { EditorState, convertToRaw, convertFromRaw, RawDraftContentState } from 
 import { Editor } from 'react-draft-wysiwyg';
 
 /* Interface */
-import { RootState, ColorsState, ProductProps, ProductPropValues, BrandsState, ProductState } from 'interface';
+import { RootState, ColorsState, CategorySate, ProductProps, ProductPropValues, BrandsState, ProductState } from 'interface';
 
 /* Components */
 import ColorsPlaceholder from 'components/ColorsPlaceholder';
@@ -33,6 +33,7 @@ import { FormType } from 'constant-app';
 
 /* Actions */
 import { get_all_colors } from 'actions/colors';
+import { get_all_categories } from 'actions/categories';
 import { get_all_brands } from 'actions/brands';
 import { create_product, update_product } from 'actions/products';
 
@@ -50,6 +51,7 @@ interface ComponentProps {
 
 interface StateToProps {
   colors: ColorsState[],
+  categories: CategorySate[],
   brands: BrandsState[],
   loading: boolean,
   error: boolean,
@@ -58,6 +60,7 @@ interface StateToProps {
 
 interface DispatchProps {
   get_all_colors: () => void,
+  get_all_categories: () => void,
   get_all_brands: () => void,
   create_product: (product: ProductState, history: any) => void,
   update_product: (id: any, product: ProductState, history: any) => void,
@@ -85,7 +88,7 @@ class Products extends Component<Props, State> {
   }
 
   componentDidMount() {
-    const { colors, get_all_colors, brands, get_all_brands, form, formType } = this.props;
+    const { colors, get_all_colors, categories, get_all_categories, brands, get_all_brands, form, formType } = this.props;
 
     if (formType === FormType.EDIT) {
       const { name, price, sale, descripsion, colors, props } = this.props.product as ProductState;
@@ -101,6 +104,10 @@ class Products extends Component<Props, State> {
     
     if (colors.length === 0) {
       get_all_colors();
+    }
+
+    if (categories.length === 0) {
+      get_all_categories();
     }
 
     if (brands.length === 0) {
@@ -177,7 +184,7 @@ class Products extends Component<Props, State> {
   }
 
   render() {
-    const { formType, colors, brands, error, message, form, loading, product } = this.props;
+    const { formType, colors, categories, brands, error, message, form, loading, product } = this.props;
     const { getFieldDecorator } = form;
     const { submitted, showAddColor, activeColor, productsColors, editorState, productProps } = this.state;
 
@@ -235,6 +242,27 @@ class Products extends Component<Props, State> {
               </Form.Item>
             </Col>
           </Row>
+          <Spin spinning={loading["GET_CATEGORIES"]} tip="Fetching categories...">
+            <Form.Item label="Category">
+              {
+                getFieldDecorator('category', {
+                  initialValue: product && product.category && product.category._id,
+                  rules: [{ required: true, message: 'This field is required.' }]
+                })(
+                  <Select
+                    style={{ width: 200 }}
+                    placeholder="Select a category"
+                  >
+                    {
+                      categories.map((category: CategorySate) => (
+                        <Option key={category._id} value={category._id}>{category.name}</Option>
+                      ))
+                    }
+                  </Select>
+                )
+              }
+            </Form.Item>
+          </Spin>
           <Spin spinning={loading["GET_BRANDS"]} tip="Fetching brand...">
             <Form.Item label="Brand">
               {
@@ -303,10 +331,11 @@ class Products extends Component<Props, State> {
 }
 
 const mapStateToProps = (state: RootState) => {
-  const { colors, brands, loading, errors, feedback } = state;
+  const { colors, categories, brands, loading, errors, feedback } = state;
 
   return {
     colors,
+    categories,
     brands,
     loading,
     error: create_error_selector(["CREATE_PRODUCT", "UPDATE_PRODUCT"])(errors),
@@ -316,6 +345,7 @@ const mapStateToProps = (state: RootState) => {
 
 export default connect(mapStateToProps, {
   get_all_colors,
+  get_all_categories,
   get_all_brands,
   create_product,
   update_product

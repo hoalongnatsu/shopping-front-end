@@ -9,10 +9,10 @@ import { Link } from 'react-router-dom';
 import ContentAction from 'pages/Admin/Content/Action';
 
 /* Interface */
-import { RootState, BrandsState } from 'interface';
+import { RootState, CategorySate } from 'interface';
 
 /* Actions */
-import { get_all_brands, delete_brand } from 'actions/brands';
+import { get_all_categories, delete_category } from 'actions/categories';
 
 /* Helpers */
 import {
@@ -22,23 +22,21 @@ import {
 } from 'helpers/selectors';
 
 const { Column } = Table;
-const { REACT_APP_IMAGE_URL, REACT_APP_SERVER_BRAND_IMAGE_FOLDER } = process.env;
-const IMAGE_URL = `${REACT_APP_IMAGE_URL}/${REACT_APP_SERVER_BRAND_IMAGE_FOLDER}`;
 
 interface ComponentProps {
   
 }
 
 interface StateToProps {
-  brands: BrandsState[],
+  categories: CategorySate[],
   loading: boolean,
   error: boolean,
   message: string
 }
 
 interface DispatchToProps {
-  get_all_brands: () => void,
-  delete_brand: (id: string) => void
+  get_all_categories: () => void,
+  delete_category: (id: string) => void
 }
 
 type Props = ComponentProps & StateToProps & DispatchToProps;
@@ -47,31 +45,31 @@ interface State {
   
 }
 
-class Brands extends Component<Props, State> {
+class Categories extends Component<Props, State> {
   state = {}
 
   componentDidMount() {
-    const { brands, get_all_brands } = this.props;
+    const { categories, get_all_categories } = this.props;
 
-    if (brands.length === 0) {
-      get_all_brands();
+    if (categories.length === 0) {
+      get_all_categories();
     }
   }
 
-  _confirm_delete_brand = (id: string) => {
-    this.props.delete_brand(id);
+  _confirm_delete_category = (id: string) => {
+    this.props.delete_category(id);
   }
 
   _action = (text: any, record: any) => (
     <div className="table__action">
-      <Link to={`/admin/brands/${record._id}/edit`}>
+      <Link to={`/admin/categories/${record._id}/edit`}>
         <Icon type="edit" theme="filled" style={{color: "#6EB2FB", cursor: "pointer", fontSize: 16}} />
       </Link>
       <Popconfirm
-        title="Are you sure delete this color?"
+        title="Are you sure delete this category?"
         okText="Yes"
         cancelText="No"
-        onConfirm={() => this._confirm_delete_brand(record._id)}
+        onConfirm={() => this._confirm_delete_category(record._id)}
       >
         <Icon type="delete" theme="filled" style={{color: "#6EB2FB", cursor: "pointer", fontSize: 16}} />
       </Popconfirm>
@@ -79,24 +77,16 @@ class Brands extends Component<Props, State> {
   )
 
   render() {
-    const { brands, loading, error, message } = this.props;
+    const { categories, loading, error, message } = this.props;
 
     return (
       <Skeleton loading={loading} active={true}>
         <>
           {error && <Alert message={message} type="error" closable={true} style={{marginBottom: 12}} />}
-          <ContentAction to="/admin/brands/create" />
+          <ContentAction to="/admin/categories/create" />
           <div className="content-table">
-            <Table dataSource={brands} rowKey={record => record._id as string} >
+            <Table dataSource={categories} rowKey={record => record._id as string} >
               <Column title="Name" dataIndex="name" key="name" />
-              <Column
-                title="Logo"
-                dataIndex="logo"
-                key="logo"
-                render={(logo) => (
-                  <img className="table__image" src={`${IMAGE_URL}/${logo}`} alt="logo" />
-                )}
-              />
               <Column
                 title="Action"
                 key="action"
@@ -110,16 +100,16 @@ class Brands extends Component<Props, State> {
   }
 }
 
-const descending_brands_selector = descending_order_selector();
+const descending_categories_selector = descending_order_selector();
 const mapStateToProps = (state: RootState) => {
   const { loading, errors, feedback } = state;
 
   return {
-    brands: descending_brands_selector(state, 'brands'),
-    loading: create_loading_selector(['GET_BRANDS'])(loading),
-    error: create_error_selector(['GET_BRANDS'])(errors),
+    categories: descending_categories_selector(state, 'categories'),
+    loading: create_loading_selector(['GET_CATEGORIES'])(loading),
+    error: create_error_selector(['GET_CATEGORIES'])(errors),
     message: feedback.error
   }
 }
 
-export default connect(mapStateToProps, { get_all_brands, delete_brand })(Brands);
+export default connect(mapStateToProps, { get_all_categories, delete_category })(Categories);

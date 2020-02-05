@@ -11,6 +11,7 @@ const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
 const sidebar = [
   { name: 'Colors', icon: 'bg-colors', to: '/admin/colors' },
+  { name: 'Categories', icon: 'skin', to: '/admin/categories' },
   { name: 'Brands', icon: 'sketch', to: '/admin/brands' },
   { name: 'Products', icon: 'shop', to: '/admin/products' },
 ];

@@ -114,6 +114,7 @@ class Products extends Component<Props, State> {
               key="price"
               render={this._renderPrice}
             />
+            <Column title="Category" dataIndex="category.name" key="category" />
             <Column title="Brand" dataIndex="brand.name" key="brand" />
             <Column
               title="Action"

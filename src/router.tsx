@@ -20,6 +20,9 @@ const Colors = React.lazy(() => import('pages/Admin/Colors'));
 const TrashColors = React.lazy(() => import('pages/Admin/Colors/Trash'));
 const CreateColor = React.lazy(() => import('pages/Admin/Colors/Create'));
 const EditColor = React.lazy(() => import('pages/Admin/Colors/Edit'));
+const Categories = React.lazy(() => import('pages/Admin/Categories'));
+const CreateCategory = React.lazy(() => import('pages/Admin/Categories/Create'));
+const EditCategory = React.lazy(() => import('pages/Admin/Categories/Edit'));
 const Brands = React.lazy(() => import('pages/Admin/Brands'));
 const TrashBrands = React.lazy(() => import('pages/Admin/Brands/Trash'));
 const CreateBrand = React.lazy(() => import('pages/Admin/Brands/Create'));
@@ -39,9 +42,15 @@ export const routes = [
   { name: 'Create Color', path: '/admin/colors/create', component: CreateColor, layout: Admin, requireLogin: true, isAdmin: true },
   { name: 'Edit Color', path: '/admin/colors/:id/edit', component: EditColor, layout: Admin, requireLogin: true, isAdmin: true },
   { name: 'Colors', path: '/admin/colors', component: Colors, layout: Admin, requireLogin: true, isAdmin: true },
+
+  { name: 'Create Category', path: '/admin/categories/create', component: CreateCategory, layout: Admin, requireLogin: true, isAdmin: true },
+  { name: 'Edit Category', path: '/admin/categories/:id/edit', component: EditCategory, layout: Admin, requireLogin: true, isAdmin: true },
+  { name: 'Categories', path: '/admin/categories', component: Categories, layout: Admin, requireLogin: true, isAdmin: true },
+
   { name: 'Create Brand', path: '/admin/brands/create', component: CreateBrand, layout: Admin, requireLogin: true, isAdmin: true },
   { name: 'Edit Brand', path: '/admin/brands/:id/edit', component: EditBrand, layout: Admin, requireLogin: true, isAdmin: true },
   { name: 'Brands', path: '/admin/brands', component: Brands, layout: Admin, requireLogin: true, isAdmin: true },
+
   { name: 'Create Product', path: '/admin/products/create', component: CreateProducts, layout: Admin, requireLogin: true, isAdmin: true },
   { name: 'Edit Product', path: '/admin/products/:id/edit', component: EditProducts, layout: Admin, requireLogin: true, isAdmin: true },
   { name: 'Products', path: '/admin/products', component: Products, layout: Admin, requireLogin: true, isAdmin: true },
