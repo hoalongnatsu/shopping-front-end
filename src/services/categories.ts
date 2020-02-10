@@ -27,7 +27,7 @@ export function update_category(id: any, category: CategorySate): Promise<Catego
   })
 }
 
-export function delete_category(id: any): Promise<CategorySate> {
+export function delete_category(id: any): Promise<string> {
   return axios_auth.delete(`/categories/${id}/remove`).then(({data}) => data);
 }
 

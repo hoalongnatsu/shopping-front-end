@@ -134,3 +134,47 @@ export function delete_product(id: any): ThunkAction<void, {}, {}, AnyAction> {
     })
   }
 }
+
+export function restore_product(id: string): ThunkAction<void, {}, {}, AnyAction> {
+  return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+    dispatch({type: RESTORE_PRODUCT_REQUEST});
+
+    products.restore_product(id).then((product) => {
+      dispatch({
+        type: RESTORE_PRODUCT_SUCCESS,
+        payload: product
+      })
+      message.success('Restore succesfully');
+    }).catch((e) => {
+      batch(() => {
+        dispatch({type: RESTORE_PRODUCT_FAILURE})
+        dispatch({
+          type: SET_ERROR_MESSAGE,
+          payload: 'Something went wrong please try again later!'
+        })
+      })
+    })
+  }
+}
+
+export function remove_product(id: string): ThunkAction<void, {}, {}, AnyAction> {
+  return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+    dispatch({type: REMOVE_PRODUCT_REQUEST});
+
+    products.remove_product(id).then((id) => {
+      dispatch({
+        type: REMOVE_PRODUCT_SUCCESS,
+        payload: id
+      })
+      message.success('Remove succesfully');
+    }).catch((e) => {
+      batch(() => {
+        dispatch({type: REMOVE_PRODUCT_FAILURE})
+        dispatch({
+          type: SET_ERROR_MESSAGE,
+          payload: 'Something went wrong please try again later!'
+        })
+      })
+    })
+  }
+}

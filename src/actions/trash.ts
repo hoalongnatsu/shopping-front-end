@@ -5,6 +5,7 @@ import { batch } from 'react-redux';
 
 import colors from 'services/colors';
 import brands from 'services/brands';
+import products from 'services/products';
 import { SET_ERROR_MESSAGE } from './feedback';
 
 export const GET_TRASH_COLORS_REQUEST = 'GET_TRASH_COLORS_REQUEST';
@@ -13,6 +14,9 @@ export const GET_TRASH_COLORS_FAILURE = 'GET_TRASH_COLORS_FAILURE';
 export const GET_TRASH_BRANDS_REQUEST = 'GET_TRASH_BRANDS_REQUEST';
 export const GET_TRASH_BRANDS_SUCCESS = 'GET_TRASH_BRANDS_SUCCESS';
 export const GET_TRASH_BRANDS_FAILURE = 'GET_TRASH_BRANDS_FAILURE';
+export const GET_TRASH_PRODUCTS_REQUEST = 'GET_TRASH_PRODUCTS_REQUEST';
+export const GET_TRASH_PRODUCTS_SUCCESS = 'GET_TRASH_PRODUCTS_SUCCESS';
+export const GET_TRASH_PRODUCTS_FAILURE = 'GET_TRASH_PRODUCTS_FAILURE';
 
 export function get_trash_colors(): ThunkAction<void, {}, {}, AnyAction> {
   return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
@@ -47,6 +51,27 @@ export function get_trash_brands(): ThunkAction<void, {}, {}, AnyAction> {
     }).catch((e) => {
       batch(() => {
         dispatch({type: GET_TRASH_BRANDS_FAILURE})
+        dispatch({
+          type: SET_ERROR_MESSAGE,
+          payload: 'Something went wrong please try again later!'
+        })
+      })
+    })
+  }
+}
+
+export function get_trash_products(): ThunkAction<void, {}, {}, AnyAction> {
+  return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+    dispatch({type: GET_TRASH_PRODUCTS_REQUEST})
+
+    products.get_trash_products().then((products) => {
+      dispatch({
+        type: GET_TRASH_PRODUCTS_SUCCESS,
+        payload: products
+      })
+    }).catch((e) => {
+      batch(() => {
+        dispatch({type: GET_TRASH_PRODUCTS_FAILURE})
         dispatch({
           type: SET_ERROR_MESSAGE,
           payload: 'Something went wrong please try again later!'

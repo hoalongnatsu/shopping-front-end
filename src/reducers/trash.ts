@@ -3,14 +3,17 @@ import { TrashState, Action } from 'interface';
 
 import { RESTORE_COLOR_SUCCESS, REMOVE_COLOR_SUCCESS } from 'actions/colors';
 import { RESTORE_BRAND_SUCCESS, REMOVE_BRAND_SUCCESS } from 'actions/brands';
+import { RESTORE_PRODUCT_SUCCESS, REMOVE_PRODUCT_SUCCESS } from 'actions/products';
 import {
   GET_TRASH_COLORS_SUCCESS,
-  GET_TRASH_BRANDS_SUCCESS
+  GET_TRASH_BRANDS_SUCCESS,
+  GET_TRASH_PRODUCTS_SUCCESS
 } from 'actions/trash';
 
 const initialState: TrashState = {
   colors: [],
-  brands: []
+  brands: [],
+  products: []
 };
 
 export default function trash(state: TrashState = initialState, action: Action): TrashState {
@@ -32,6 +35,15 @@ export default function trash(state: TrashState = initialState, action: Action):
     }
     case REMOVE_BRAND_SUCCESS: {
       return { ...state, brands: state.brands.filter((brand) => brand._id !== action.payload) };
+    }
+    case GET_TRASH_PRODUCTS_SUCCESS: {
+      return { ...state, products: action.payload};
+    }
+    case RESTORE_PRODUCT_SUCCESS: {
+      return { ...state, products: state.products.filter((product) => product._id !== action.payload._id) };
+    }
+    case REMOVE_PRODUCT_SUCCESS: {
+      return { ...state, products: state.products.filter((product) => product._id !== action.payload) };
     }
     default:
       return state;

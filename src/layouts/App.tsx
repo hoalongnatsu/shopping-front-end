@@ -1,6 +1,6 @@
 import './App.scss';
 
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
 /* Components */
 import Topbar from 'components/Topbar';
@@ -18,10 +18,10 @@ class App extends Component<Props, State> {
 
   render() {
     return (
-      <Fragment>
+      <>
         <Topbar />
         {this.props.children}
-      </Fragment>
+      </>
     )
   }
 }

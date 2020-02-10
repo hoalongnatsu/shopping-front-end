@@ -37,7 +37,7 @@ export function delete_color(id: string): Promise<string> {
  return axios_auth.delete(`/colors/${id}`).then(({data}) => data);
 }
 
-export function restore_color(id: string): Promise<ColorsState> {
+export function restore_color(id: string): Promise<string> {
   return axios_auth.patch(`/colors/${id}/restore`).then(({data}) => {
     return data;
   })

@@ -40,11 +40,6 @@ export interface UserState {
   admin: string
 }
 
-export interface TrashState {
-  colors: ColorsState[],
-  brands: BrandsState[],
-}
-
 export interface ProductPropValues {
   size: string[],
   images: string[],
@@ -64,6 +59,12 @@ export interface ProductState {
   price: number,
   sale: number,
   props: ProductProps
+}
+
+export interface TrashState {
+  colors: ColorsState[],
+  brands: BrandsState[],
+  products: ProductState[]
 }
 
 export interface RootState {

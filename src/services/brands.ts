@@ -37,8 +37,8 @@ export function delete_brand(id: string): Promise<string> {
   return axios_auth.delete(`/brands/${id}`).then(({data}) => data);
 }
 
-export function restore_brand(id: string): Promise<BrandsState> {
-  return axios_auth.delete(`/brands/${id}/restore`).then(({data}) => data);
+export function restore_brand(id: string): Promise<string> {
+  return axios_auth.patch(`/brands/${id}/restore`).then(({data}) => data);
 }
 
 export function remove_brand(id: string): Promise<string> {

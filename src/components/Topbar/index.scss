@@ -1,0 +1,90 @@
+.topbar {
+  box-shadow: var(--box-shadow-);
+  position: relative;
+  z-index: 1;
+  background: white;
+
+  &__container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 8px 16px;
+    display: flex;
+  }
+
+  /* Logo */
+  &__logo {
+    flex: 0 0 150px;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+
+    img {
+      width: 35px;
+    }
+  }
+
+  /* Content */
+  &__content {
+    flex: 1;
+    display: flex;
+  }
+
+  /* Left, Right */
+  &__left, &__right {
+    display: flex;
+  }
+
+  &__left {
+    @media screen and (max-width: 575px) {
+      display: none;
+    }
+  }
+
+  &__right {
+    margin-left: auto;
+    align-items: center;
+  }
+
+  /* Item */
+  &__item {
+
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+
+  &__link {
+    font-size: 16px;
+    font-weight: 500;
+    padding: 8px;
+    display: block;
+    cursor: pointer;
+
+    &:link, &:visited {
+      color: var(--color-dark-secondary);
+    }
+
+    &:hover {
+      color: var(--color-dark);
+    }
+  }
+
+  /* Icon */
+  &__icon {
+    cursor: pointer;
+
+    &--menu {
+      @media screen and (min-width: 576px) {
+        display: none;
+      }
+    }
+
+    &:not(:last-child) {
+      margin-right: 15px;
+    }
+
+    svg {
+      font-size: 20px;
+    }
+  }
+}

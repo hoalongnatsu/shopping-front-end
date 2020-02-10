@@ -16,18 +16,23 @@ const About = React.lazy(() => import('pages/About'));
 
 /* Admin */
 const AdminPage = React.lazy(() => import('pages/Admin'));
+
 const Colors = React.lazy(() => import('pages/Admin/Colors'));
 const TrashColors = React.lazy(() => import('pages/Admin/Colors/Trash'));
 const CreateColor = React.lazy(() => import('pages/Admin/Colors/Create'));
 const EditColor = React.lazy(() => import('pages/Admin/Colors/Edit'));
+
 const Categories = React.lazy(() => import('pages/Admin/Categories'));
 const CreateCategory = React.lazy(() => import('pages/Admin/Categories/Create'));
 const EditCategory = React.lazy(() => import('pages/Admin/Categories/Edit'));
+
 const Brands = React.lazy(() => import('pages/Admin/Brands'));
 const TrashBrands = React.lazy(() => import('pages/Admin/Brands/Trash'));
 const CreateBrand = React.lazy(() => import('pages/Admin/Brands/Create'));
 const EditBrand = React.lazy(() => import('pages/Admin/Brands/Edit'));
+
 const Products = React.lazy(() => import('pages/Admin/Products'));
+const TrashProducts = React.lazy(() => import('pages/Admin/Products/Trash'));
 const CreateProducts = React.lazy(() => import('pages/Admin/Products/Create'));
 const EditProducts = React.lazy(() => import('pages/Admin/Products/Edit'));
 
@@ -57,7 +62,8 @@ export const routes = [
   
   /* Trash */
   { name: 'Colors', path: '/admin/trash/colors', component: TrashColors, layout: Admin, requireLogin: true, isAdmin: true },
-  { name: 'Colors', path: '/admin/trash/brands', component: TrashBrands, layout: Admin, requireLogin: true, isAdmin: true },
+  { name: 'Brands', path: '/admin/trash/brands', component: TrashBrands, layout: Admin, requireLogin: true, isAdmin: true },
+  { name: 'Products', path: '/admin/trash/products', component: TrashProducts, layout: Admin, requireLogin: true, isAdmin: true },
   
   { name: 'Admin', path: '/admin', component: AdminPage, layout: Admin, requireLogin: true, isAdmin: true },
 
@@ -65,7 +71,7 @@ export const routes = [
   { name: 'Login', path: '/login', component: Login, layout: App, requireLogin: false, isAdmin: false },
 
   /* App route */
-  { name: 'About', path: '/about', component: About, layout: App, requireLogin: true, isAdmin: false },
+  { name: 'About', path: '/about', component: About, layout: App, requireLogin: false, isAdmin: false },
   { name: 'Home', path: '/', component: Home, layout: App, requireLogin: false, isAdmin: false },
   
 ];
@@ -75,10 +81,10 @@ export const RootRouter: React.FC<Props> = () => (
       <Switch>
         {
           routes.map(({name, ...route}) => (
-          <CustomRoute key={name} {...route} />
+            <CustomRoute key={name} {...route} />
           ))
         }
-        <Route path="/*" component={NotFound} />
+        <Route path="*" component={NotFound} />
       </Switch>
     </HashRouter>
 )

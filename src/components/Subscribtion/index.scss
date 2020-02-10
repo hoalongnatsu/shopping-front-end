@@ -1,0 +1,45 @@
+.subscribtion {
+  background-image:
+    linear-gradient(to right bottom, rgba(#000000, 0.22), rgba(#000000, 0.22)),
+    linear-gradient(to right bottom, rgba(#00D3CA, 0.52), rgba(#00D3CA, 0.52)),
+    url('/images/subscription-background.jpg');
+  background-size: cover;
+  padding: 100px 0;
+
+  &__container {
+    max-width: 1300px;
+    padding: 0 20px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__title, &__desc {
+    color: white !important;
+    text-align: center;
+  }
+
+  &__desc {
+    font-size: 18px;
+  }
+
+  &__form {
+    display: flex;
+
+    @media screen and (max-width: 576px) {
+      flex-direction: column;
+    }
+    
+    .ant-input-affix-wrapper {
+      width: 400px;
+      margin-right: 20px;
+
+      @media screen and (max-width: 576px) {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+      }
+    }
+  }
+}

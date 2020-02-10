@@ -5,7 +5,8 @@ import {
   GET_PRODUCTS_SUCCESS,
   CREATE_PRODUCT_SUCCESS,
   UPDATE_PRODUCT_SUCCESS,
-  DELETE_PRODUCT_SUCCESS
+  DELETE_PRODUCT_SUCCESS,
+  RESTORE_PRODUCT_SUCCESS
 } from 'actions/products';
 
 const initialState: ProductState[] = [];
@@ -27,6 +28,9 @@ export default function products(state: ProductState[] = initialState, action: A
     }
     case DELETE_PRODUCT_SUCCESS: {
       return state.filter((product) => product._id !== action.payload);
+    }
+    case RESTORE_PRODUCT_SUCCESS: {
+      return state.length ? [...state, action.payload] : state;
     }
     default:
       return state;

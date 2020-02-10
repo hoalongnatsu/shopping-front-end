@@ -1,11 +1,11 @@
 import './Admin.scss';
 
 import React, { Component } from 'react';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import { Layout, Menu, Icon } from 'antd';
 
-/* Assets */
-import logo from 'assets/icons/logo_transparent.png';
+/* Components */
+import Logo from 'components/Logo';
 
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
@@ -17,7 +17,8 @@ const sidebar = [
 ];
 const trash = [
   { name: 'Colors', to: '/admin/trash/colors' },
-  { name: 'Brands', to: '/admin/trash/brands' }
+  { name: 'Brands', to: '/admin/trash/brands' },
+  { name: 'Products', to: '/admin/trash/products' }
 ];
 
 interface ComponentProps {
@@ -61,9 +62,7 @@ class Admin extends Component<Props, State> {
     return (
       <Layout>
         <Sider trigger={null} collapsible={true} collapsed={collapsed}>
-          <div className="logo">
-            <img src={logo} alt="logo" />
-          </div>
+          <Link to="/"><Logo /></Link>
           <Menu theme="dark" mode="inline" onClick={this.changePage} defaultSelectedKeys={[selectedKeys]} defaultOpenKeys={[openKeys]}>
             {
               sidebar.map(({name, to, icon}) => (
