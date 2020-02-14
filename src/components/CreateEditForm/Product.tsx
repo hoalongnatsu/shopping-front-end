@@ -14,7 +14,8 @@ import {
   Col,
   Tooltip,
   Select, 
-  Spin
+  Spin,
+  Upload
 } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
@@ -27,6 +28,7 @@ import { RootState, ColorsState, CategorySate, ProductProps, ProductPropValues, 
 /* Components */
 import ColorsPlaceholder from 'components/ColorsPlaceholder';
 import FormAddProductProps from 'components/Form/AddProductProps';
+import Label from 'components/Label';
 
 /* Constant */
 import { FormType } from 'constant-app';
@@ -43,6 +45,10 @@ import { formatToCurrencyVND } from 'helpers/format';
 
 const { Title } = Typography;
 const { Option } = Select;
+const { TextArea } = Input;
+const API = process.env.REACT_APP_API_URL;
+const { REACT_APP_IMAGE_URL, REACT_APP_SERVER_PRODUCT_IMAGE_FOLDER } = process.env;
+const IMAGE_URL = `${REACT_APP_IMAGE_URL}/${REACT_APP_SERVER_PRODUCT_IMAGE_FOLDER}`;
 
 interface ComponentProps {
   formType: FormType,
@@ -73,8 +79,9 @@ interface State {
   productsColors: ColorsState[],
   activeColor: number,
   showAddColor: boolean,
+  imageCover: string,
   productProps: ProductProps,
-  editorState: EditorState
+  editorState: EditorState,
 }
 
 class Products extends Component<Props, State> {
@@ -83,6 +90,7 @@ class Products extends Component<Props, State> {
     productsColors: [],
     showAddColor: false,
     activeColor: -1,
+    imageCover: '',
     productProps: {},
     editorState: EditorState.createEmpty()
   }
@@ -91,12 +99,13 @@ class Products extends Component<Props, State> {
     const { colors, get_all_colors, categories, get_all_categories, brands, get_all_brands, form, formType } = this.props;
 
     if (formType === FormType.EDIT) {
-      const { name, price, sale, descripsion, colors, props } = this.props.product as ProductState;
+      const { name, price, sale, short_descripsion, descripsion, colors, image_cover, props } = this.props.product as ProductState;
       const editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(descripsion) as RawDraftContentState));
 
-      form.setFieldsValue({name, price, sale});
+      form.setFieldsValue({name, price, sale, short_descripsion});
       this.setState({
         productsColors: colors,
+        imageCover: image_cover,
         productProps: props,
         editorState
       });
@@ -117,12 +126,13 @@ class Products extends Component<Props, State> {
 
   _submit = () => {
     const { form, formType, create_product, update_product, history, product } = this.props;
-    const { productsColors, productProps, editorState } = this.state;
+    const { productsColors, productProps, imageCover, editorState } = this.state;
 
     form.validateFields((err, products) => {
       if (!err) {
         products.descripsion = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
         products.colors = productsColors.map((color: ColorsState) => color._id);
+        products.image_cover = imageCover;
         products.props = productProps;
 
         if (formType === FormType.CREATE) {
@@ -183,10 +193,21 @@ class Products extends Component<Props, State> {
     this.setState({productProps: newProductProps})
   }
 
+  _changeImageCover = (info: any) => {
+    if (info.file.response) { // success upload
+      const { filename } = info.file.response;
+      this.setState({imageCover: filename});
+    }
+  }
+
+  _getFilePreview = (e: any) => {
+    return e && e.fileList;
+  }
+
   render() {
     const { formType, colors, categories, brands, error, message, form, loading, product } = this.props;
     const { getFieldDecorator } = form;
-    const { submitted, showAddColor, activeColor, productsColors, editorState, productProps } = this.state;
+    const { submitted, showAddColor, activeColor, productsColors, editorState, imageCover, productProps } = this.state;
 
     return (
       <>
@@ -242,6 +263,27 @@ class Products extends Component<Props, State> {
               </Form.Item>
             </Col>
           </Row>
+          <Label name="Image Cover" required={true} />
+          {imageCover && <img style={{width: 150, border: '1px solid #d9d9d9'}} alt="example" src={`${IMAGE_URL}/${imageCover}`} />}
+          <Form.Item label="Upload Image Cover">
+            {
+              getFieldDecorator('image_cover', {
+                valuePropName: 'fileList',
+                getValueFromEvent: this._getFilePreview,
+              })(
+                <Upload
+                  name="image_upload"
+                  action={`${API}/photos/upload`}
+                  showUploadList={false}
+                  onChange={this._changeImageCover}
+                >
+                  <Button>
+                    <Icon type="upload" /> Click to upload
+                  </Button>
+                </Upload>
+              )
+            }
+          </Form.Item>
           <Spin spinning={loading["GET_CATEGORIES"]} tip="Fetching categories...">
             <Form.Item label="Category">
               {
@@ -284,6 +326,11 @@ class Products extends Component<Props, State> {
               }
             </Form.Item>
           </Spin>
+          <Form.Item label="Short Description">
+            {
+              getFieldDecorator('short_descripsion')(<TextArea rows={4} />)
+            }
+          </Form.Item>
         </Form>
         <Editor
           wrapperClassName="wrapper-editor"

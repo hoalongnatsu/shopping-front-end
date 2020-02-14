@@ -12,6 +12,24 @@ import { SET_ERROR_MESSAGE } from './feedback';
 export const GET_PRODUCTS_REQUEST = 'GET_PRODUCTS_REQUEST';
 export const GET_PRODUCTS_SUCCESS = 'GET_PRODUCTS_SUCCESS';
 export const GET_PRODUCTS_FAILURE = 'GET_PRODUCTS_FAILURE';
+export const GET_TOP_SALE_PRODUCT_REQUEST = 'GET_TOP_SALE_PRODUCT_REQUEST';
+export const GET_TOP_SALE_PRODUCT_SUCCESS = 'GET_TOP_SALE_PRODUCT_SUCCESS';
+export const GET_TOP_SALE_PRODUCT_FAILURE = 'GET_TOP_SALE_PRODUCT_FAILURE';
+export const TOGGLE_TOP_SALE_PRODUCT_REQUEST = 'TOGGLE_TOP_SALE_PRODUCT_REQUEST';
+export const TOGGLE_TOP_SALE_PRODUCT_SUCCESS = 'TOGGLE_TOP_SALE_PRODUCT_SUCCESS';
+export const TOGGLE_TOP_SALE_PRODUCT_FAILURE = 'TOGGLE_TOP_SALE_PRODUCT_FAILURE';
+export const GET_HOT_PRODUCTS_REQUEST = 'GET_HOT_PRODUCTS_REQUEST';
+export const GET_HOT_PRODUCTS_SUCCESS = 'GET_HOT_PRODUCTS_SUCCESS';
+export const GET_HOT_PRODUCTS_FAILURE = 'GET_HOT_PRODUCTS_FAILURE';
+export const TOGGLE_HOT_PRODUCT_REQUEST = 'TOGGLE_HOT_PRODUCT_REQUEST';
+export const TOGGLE_HOT_PRODUCT_SUCCESS = 'TOGGLE_HOT_PRODUCT_SUCCESS';
+export const TOGGLE_HOT_PRODUCT_FAILURE = 'TOGGLE_HOT_PRODUCT_FAILURE';
+export const GET_NEW_PRODUCTS_REQUEST = 'GET_NEW_PRODUCTS_REQUEST';
+export const GET_NEW_PRODUCTS_SUCCESS = 'GET_NEW_PRODUCTS_SUCCESS';
+export const GET_NEW_PRODUCTS_FAILURE = 'GET_NEW_PRODUCTS_FAILURE';
+export const GET_VIEWED_PRODUCTS_REQUEST = 'GET_VIEWED_PRODUCTS_REQUEST';
+export const GET_VIEWED_PRODUCTS_SUCCESS = 'GET_VIEWED_PRODUCTS_SUCCESS';
+export const GET_VIEWED_PRODUCTS_FAILURE = 'GET_VIEWED_PRODUCTS_FAILURE';
 export const CREATE_PRODUCT_REQUEST = 'CREATE_PRODUCT_REQUEST';
 export const CREATE_PRODUCT_SUCCESS = 'CREATE_PRODUCT_SUCCESS';
 export const CREATE_PRODUCT_FAILURE = 'CREATE_PRODUCT_FAILURE';
@@ -40,6 +58,132 @@ export function get_all_products(): ThunkAction<void, {}, {}, AnyAction> {
     }).catch((e) => {
       batch(() => {
         dispatch({type: GET_PRODUCTS_FAILURE})
+        dispatch({
+          type: SET_ERROR_MESSAGE,
+          payload: 'Something went wrong please try again later!'
+        })
+      })
+    })
+  }
+}
+
+export function get_top_sale_product(): ThunkAction<void, {}, {}, AnyAction> {
+  return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+    dispatch({type: GET_TOP_SALE_PRODUCT_REQUEST})
+
+    products.get_top_sale_product().then((product) => {
+      dispatch({
+        type: GET_TOP_SALE_PRODUCT_SUCCESS,
+        payload: product
+      })
+    }).catch((e) => {
+      batch(() => {
+        dispatch({type: GET_TOP_SALE_PRODUCT_FAILURE})
+        dispatch({
+          type: SET_ERROR_MESSAGE,
+          payload: 'Something went wrong please try again later!'
+        })
+      })
+    })
+  }
+}
+
+export function toggle_top_sale_product(id: string, top_sale: boolean): ThunkAction<void, {}, {}, AnyAction> {
+  return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+    dispatch({type: TOGGLE_TOP_SALE_PRODUCT_REQUEST})
+
+    products.toggle_top_sale_product(id, top_sale).then((product) => {
+      dispatch({
+        type: TOGGLE_TOP_SALE_PRODUCT_SUCCESS,
+        payload: product
+      })
+    }).catch((e) => {
+      batch(() => {
+        dispatch({type: TOGGLE_TOP_SALE_PRODUCT_FAILURE})
+        dispatch({
+          type: SET_ERROR_MESSAGE,
+          payload: 'Something went wrong please try again later!'
+        })
+      })
+    })
+  }
+}
+
+export function get_hot_products(): ThunkAction<void, {}, {}, AnyAction> {
+  return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+    dispatch({type: GET_HOT_PRODUCTS_REQUEST})
+
+    products.get_hot_products().then((products) => {
+      dispatch({
+        type: GET_HOT_PRODUCTS_SUCCESS,
+        payload: products
+      })
+    }).catch((e) => {
+      batch(() => {
+        dispatch({type: GET_HOT_PRODUCTS_FAILURE})
+        dispatch({
+          type: SET_ERROR_MESSAGE,
+          payload: 'Something went wrong please try again later!'
+        })
+      })
+    })
+  }
+}
+
+export function toggle_hot_product(id: string, hot: boolean): ThunkAction<void, {}, {}, AnyAction> {
+  return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+    dispatch({type: TOGGLE_HOT_PRODUCT_REQUEST})
+
+    products.toggle_hot_product(id, hot).then((product) => {
+      dispatch({
+        type: TOGGLE_HOT_PRODUCT_SUCCESS,
+        payload: product
+      })
+    }).catch((e) => {
+      batch(() => {
+        dispatch({type: TOGGLE_HOT_PRODUCT_FAILURE})
+        dispatch({
+          type: SET_ERROR_MESSAGE,
+          payload: 'Something went wrong please try again later!'
+        })
+      })
+    })
+  }
+}
+
+export function get_new_products(): ThunkAction<void, {}, {}, AnyAction> {
+  return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+    dispatch({type: GET_NEW_PRODUCTS_REQUEST})
+
+    products.get_new_products().then((products) => {
+      dispatch({
+        type: GET_NEW_PRODUCTS_SUCCESS,
+        payload: products
+      })
+    }).catch((e) => {
+      batch(() => {
+        dispatch({type: GET_NEW_PRODUCTS_FAILURE})
+        dispatch({
+          type: SET_ERROR_MESSAGE,
+          payload: 'Something went wrong please try again later!'
+        })
+      })
+    })
+  }
+}
+
+export function get_viewed_products(): ThunkAction<void, {}, {}, AnyAction> {
+  return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+    dispatch({type: GET_VIEWED_PRODUCTS_REQUEST})
+
+    products.get_viewed_products().then((products) => {
+      dispatch({
+        type: GET_VIEWED_PRODUCTS_SUCCESS,
+        payload: products
+      })
+    }).catch((e) => {
+      batch(() => {
+        dispatch({type: GET_VIEWED_PRODUCTS_FAILURE})
         dispatch({
           type: SET_ERROR_MESSAGE,
           payload: 'Something went wrong please try again later!'

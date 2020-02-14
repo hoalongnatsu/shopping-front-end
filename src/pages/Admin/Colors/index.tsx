@@ -53,7 +53,7 @@ class Colors extends Component<Props, State> {
     const { colors, get_all_colors } = this.props;
 
     if (colors.length === 0) {
-      get_all_colors()
+      get_all_colors();
     }
   }
 

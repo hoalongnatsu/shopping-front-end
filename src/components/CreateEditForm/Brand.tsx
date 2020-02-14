@@ -138,7 +138,7 @@ export class Brand extends Component<Props, State> {
                 getValueFromEvent: this._getFilePreview,
               })(
                 <Upload
-                  name="logo"
+                  name="image_upload"
                   action={`${API}/photos/upload`}
                   listType="picture"
                 >

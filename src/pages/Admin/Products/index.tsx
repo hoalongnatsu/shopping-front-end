@@ -1,7 +1,7 @@
 import './index.scss';
 
 import React, { Component } from 'react';
-import { Alert, Table, Icon, Skeleton, Popconfirm } from 'antd';
+import { Alert, Table, Icon, Skeleton, Popconfirm, Switch } from 'antd';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -9,10 +9,10 @@ import { Link } from 'react-router-dom';
 import ContentAction from 'pages/Admin/Content/Action';
 
 /* Interface */
-import { RootState, ProductState, ProductProps } from 'interface';
+import { RootState, ProductState } from 'interface';
 
 /* Actions */
-import { get_all_products, delete_product } from 'actions/products';
+import { get_all_products, delete_product, toggle_hot_product, toggle_top_sale_product } from 'actions/products';
 
 /* Helpers */
 import {
@@ -33,23 +33,29 @@ interface ComponentProps {
 interface StateToProps {
   products: ProductState[],
   loading: boolean,
+  toggle_hot_product_loading: boolean,
+  toggle_top_sale_product_loading: boolean,
   error: boolean,
   message: string
 }
 
 interface DispatchProps {
   get_all_products: () => void,
-  delete_product: (id: any) => void
+  delete_product: (id: any) => void,
+  toggle_hot_product: (id: any, hot: boolean) => void,
+  toggle_top_sale_product: (id: any, top_sale: boolean) => void,
 }
 
 type Props = ComponentProps & StateToProps & DispatchProps;
 
 interface State {
-  
+  currentClickItem: string
 }
 
 class Products extends Component<Props, State> {
-  state = {}
+  state = {
+    currentClickItem: ''
+  }
 
   componentDidMount() {
     const { products, get_all_products } = this.props;
@@ -59,11 +65,21 @@ class Products extends Component<Props, State> {
     }
   }
 
-  _renderImage = (productProps: ProductProps) => {
+  toggleAttributeProduct = (id: any, value: boolean, type: string) => {
+    const { toggle_hot_product, toggle_top_sale_product } = this.props;
+    this.setState({currentClickItem: id});
+    if (type === 'hot') {
+      toggle_hot_product(id, value);
+    } else {
+      toggle_top_sale_product(id, value);
+    }
+  }
+
+  _renderImage = (image_cover: string) => {
     return (
       <img
         className="table__image"
-        src={`${IMAGE_URL}/${productProps[Object.keys(productProps)[0]].images[0]}`}
+        src={`${IMAGE_URL}/${image_cover}`}
         alt="Product"
       />
     )
@@ -71,7 +87,26 @@ class Products extends Component<Props, State> {
 
   _renderPrice = (price: number) => formatToCurrencyVND(price)
 
-  _confirm_delete_product = (id: string) => {
+  _renderToggleButton = (text: any, record: ProductState, type: string) => {
+    const { toggle_hot_product_loading, toggle_top_sale_product_loading } = this.props;
+    const { currentClickItem } = this.state;
+
+    return type === 'hot' ? (
+      <Switch
+        loading={toggle_hot_product_loading && currentClickItem === record._id}
+        checked={record.hot}
+        onClick={() => this.toggleAttributeProduct(record._id, record.hot, type)}
+      />
+    ) : (
+      <Switch
+        loading={toggle_top_sale_product_loading && currentClickItem === record._id}
+        checked={record.top_sale}
+        onClick={() => this.toggleAttributeProduct(record._id, record.top_sale, type)}
+      />
+    )
+  }
+
+  _confirmDeleteProduct = (id: string) => {
     this.props.delete_product(id);
   }
 
@@ -84,7 +119,7 @@ class Products extends Component<Props, State> {
         title="Are you sure delete this color?"
         okText="Yes"
         cancelText="No"
-        onConfirm={() => this._confirm_delete_product(record._id)}
+        onConfirm={() => this._confirmDeleteProduct(record._id)}
       >
         <Icon type="delete" theme="filled" style={{color: "#6EB2FB", cursor: "pointer", fontSize: 16}} />
       </Popconfirm>
@@ -103,7 +138,7 @@ class Products extends Component<Props, State> {
           <Table dataSource={products} rowKey={record => record._id as string} >
             <Column
               title="Image"
-              dataIndex="props"
+              dataIndex="image_cover"
               key="image"
               render={this._renderImage}
             />
@@ -116,6 +151,16 @@ class Products extends Component<Props, State> {
             />
             <Column title="Category" dataIndex="category.name" key="category" />
             <Column title="Brand" dataIndex="brand.name" key="brand" />
+            <Column
+              title="Top Sale"
+              key="top_sale"
+              render={(text: any, record: ProductState) => this._renderToggleButton(text, record, 'top_sale')}
+            />
+            <Column
+              title="Hot"
+              key="hot"
+              render={(text: any, record: ProductState) => this._renderToggleButton(text, record, 'hot')}
+            />
             <Column
               title="Action"
               key="action"
@@ -135,10 +180,17 @@ const mapStateToProps = (state: RootState) => {
 
   return {
     products: descending_colors_selector(state, 'products'),
-    loading: create_loading_selector(['GET_COLORS'])(loading),
-    error: create_error_selector(['GET_COLORS', 'DELETE_COLOR'])(errors),
+    loading: create_loading_selector(['GET_PRODUCTS'])(loading),
+    toggle_hot_product_loading: loading['TOGGLE_HOT_PRODUCT'],
+    toggle_top_sale_product_loading: loading['TOGGLE_TOP_SALE_PRODUCT'],
+    error: create_error_selector(['GET_PRODUCTS', 'DELETE_PRODUCT'])(errors),
     message: feedback.error
   }
 }
 
-export default connect(mapStateToProps, { get_all_products, delete_product })(Products);
+export default connect(mapStateToProps, {
+  get_all_products,
+  delete_product,
+  toggle_hot_product,
+  toggle_top_sale_product
+})(Products);

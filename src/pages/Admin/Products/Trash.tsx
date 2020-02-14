@@ -5,7 +5,7 @@ import { Alert, Table, Icon, Skeleton, Popconfirm } from 'antd';
 import { connect } from 'react-redux';
 
 /* Interface */
-import { RootState, ProductState, ProductProps } from 'interface';
+import { RootState, ProductState } from 'interface';
 
 /* Actions */
 import { get_trash_products } from 'actions/trash';
@@ -56,11 +56,11 @@ class Trash extends Component<Props, State> {
     }
   }
 
-  _renderImage = (productProps: ProductProps) => {
+  _renderImage = (image_cover: string) => {
     return (
       <img
         className="table__image"
-        src={`${IMAGE_URL}/${productProps[Object.keys(productProps)[0]].images[0]}`}
+        src={`${IMAGE_URL}/${image_cover}`}
         alt="Product"
       />
     )
@@ -112,7 +112,7 @@ class Trash extends Component<Props, State> {
             <Table dataSource={products} rowKey={record => record._id as string} >
               <Column
                 title="Image"
-                dataIndex="props"
+                dataIndex="image_cover"
                 key="image"
                 render={this._renderImage}
               />

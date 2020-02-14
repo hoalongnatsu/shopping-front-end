@@ -52,12 +52,16 @@ export interface ProductProps {
 export interface ProductState {
   _id?: string,
   name: string,
+  top_sale: boolean,
+  hot: boolean,
   category: CategorySate,
   brand: BrandsState,
+  short_descripsion: string,
   descripsion: string,
   colors: ColorsState[],
   price: number,
   sale: number,
+  image_cover: string,
   props: ProductProps
 }
 
@@ -76,5 +80,11 @@ export interface RootState {
   categories: CategorySate[],
   brands: BrandsState[],
   products: ProductState[],
-  trash: TrashState
+  trash: TrashState,
+
+  // Initialize State
+  top_sale_product: ProductState,
+  hot_products: ProductState[],
+  new_products: ProductState[],
+  viewed_products: ProductState[],
 }
