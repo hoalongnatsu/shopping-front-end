@@ -15,6 +15,21 @@ export function get_product_by_id(id: string): Promise<ProductState> {
   })
 }
 
+export function get_product_by_filter(
+  color_id: string,
+  size: string,
+  price_range: number[],
+  category_id: string,
+  brand_id: string,
+  page: number
+): Promise<ProductState[]> {
+  const query = `color_id=${color_id}&category_id=${category_id}&brand_id=${brand_id}&size=${size}&min_price=${price_range[0]}&max_price=${price_range[1]}&page=${page}`;
+
+  return axios.get(`/products/filter?${query}`).then(({data}) => {
+    return data;
+  })
+}
+
 export function get_top_sale_product(): Promise<ProductState> {
   return axios.get('/products/topsale').then(({data}) => {
     return data;
@@ -84,6 +99,7 @@ export function remove_product(id: string): Promise<string> {
 export default {
   get_all_products,
   get_product_by_id,
+  get_product_by_filter,
   get_top_sale_product,
   toggle_top_sale_product,
   get_hot_products,

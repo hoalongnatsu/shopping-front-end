@@ -14,7 +14,7 @@ import ImagesReview from 'components/ImagesReview';
 import FormUploadProductImage from 'components/Form/UploadProductImage';
 
 /* Constant */
-import { SIZES } from 'constant-app';
+import { SIZE } from 'constant-app';
 
 interface ComponentProps {
   values: ProductPropValues,
@@ -114,7 +114,7 @@ class AddProductProps extends Component<Props, State> {
         <Label name="Pick size" required={true} />
         <div className="size">
           {
-            SIZES.map((s) => (
+            SIZE.map((s) => (
               <div
                 key={s}
                 className={sizesActive.includes(s as never) ? "size__item active" : "size__item"}

@@ -1,6 +1,7 @@
 import './index.scss';
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Badge, Dropdown, Icon, Menu, Drawer } from 'antd';
 
@@ -8,11 +9,27 @@ import { Badge, Dropdown, Icon, Menu, Drawer } from 'antd';
 import ProductSearch from 'components/ProductSearch';
 import Logo from 'components/Logo';
 
+/* Interface */
+import { RootState, CategoryState } from 'interface';
+
+/* Actions */
+import { get_all_categories } from 'actions/categories';
+
 const { Item, SubMenu } = Menu;
 
-interface Props {
+interface ComponentProps {
   
 }
+
+interface StateToProps {
+  categories: CategoryState[],
+}
+
+interface DispatchProps {
+  get_all_categories: () => void,
+}
+
+type Props = ComponentProps & StateToProps & DispatchProps;
 
 interface State {
   showSearch: boolean,
@@ -23,6 +40,14 @@ class Topbar extends Component<Props, State> {
   state = {
     showSearch: false,
     showMobileMenu: false
+  }
+
+  componentDidMount = () => {
+    const { categories, get_all_categories } = this.props;
+
+    if (categories.length === 0) {
+      get_all_categories();
+    }
   }
 
   toggleSearchInput = () => {
@@ -39,14 +64,20 @@ class Topbar extends Component<Props, State> {
   }
 
   _renderDropDownCategory = () => {
+    const { categories } = this.props;
+
     return (
       <Menu>
-        <Item key="0">
-          <Link to="/login">Áo</Link>
+        <Item key="all">
+          <Link to="/products/category/all">All</Link>
         </Item>
-        <Item key="1">
-          <Link to="/login">Quần</Link>
-        </Item>
+        {
+          categories.map((category) => (
+            <Item key={category._id}>
+              <Link to={`/products/category/${category.name}`}>{category.name}</Link>
+            </Item>
+          ))
+        }
       </Menu>
     )
   }
@@ -65,6 +96,7 @@ class Topbar extends Component<Props, State> {
   }
 
   render() {
+    const { categories } = this.props;
     const { showSearch, showMobileMenu } = this.state;
 
     return (
@@ -120,12 +152,13 @@ class Topbar extends Component<Props, State> {
               <Link to="/">Home</Link>
             </Item>
             <SubMenu title="Sản phẩm">
-              <Item key="3">
-                <Link to="/login">Áo</Link>
-              </Item>
-              <Item key="4">
-                <Link to="/login">Quần</Link>
-              </Item>
+              {
+                categories.map((category) => (
+                  <Item key={category._id}>
+                    <Link to={`/products/category/${category.name}`}>{category.name}</Link>
+                  </Item>
+                ))
+              }
             </SubMenu>
           </Menu>
         </Drawer>
@@ -135,4 +168,12 @@ class Topbar extends Component<Props, State> {
   }
 }
 
-export default Topbar;
+const mapStateToProps = (state: RootState) => {
+  const { categories } = state;
+
+  return {
+    categories
+  }
+}
+
+export default connect(mapStateToProps, { get_all_categories })(Topbar);

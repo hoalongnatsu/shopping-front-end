@@ -23,7 +23,7 @@ import { EditorState, convertToRaw, convertFromRaw, RawDraftContentState } from 
 import { Editor } from 'react-draft-wysiwyg';
 
 /* Interface */
-import { RootState, ColorsState, CategorySate, ProductProps, ProductPropValues, BrandsState, ProductState } from 'interface';
+import { RootState, ColorsState, CategoryState, ProductProps, ProductPropValues, BrandsState, ProductState } from 'interface';
 
 /* Components */
 import ColorsPlaceholder from 'components/ColorsPlaceholder';
@@ -57,7 +57,7 @@ interface ComponentProps {
 
 interface StateToProps {
   colors: ColorsState[],
-  categories: CategorySate[],
+  categories: CategoryState[],
   brands: BrandsState[],
   loading: boolean,
   error: boolean,
@@ -296,7 +296,7 @@ class Products extends Component<Props, State> {
                     placeholder="Select a category"
                   >
                     {
-                      categories.map((category: CategorySate) => (
+                      categories.map((category: CategoryState) => (
                         <Option key={category._id} value={category._id}>{category.name}</Option>
                       ))
                     }

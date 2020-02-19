@@ -1,27 +1,27 @@
 import { axios, axios_auth } from 'helpers/axios';
 
 /* Interface */
-import { CategorySate } from 'interface';
+import { CategoryState } from 'interface';
 
-export function get_all_categories(): Promise<CategorySate[]> {
+export function get_all_categories(): Promise<CategoryState[]> {
   return axios.get('/categories').then(({data}) => {
     return data;
   })
 }
 
-export function get_category_by_id(id: string): Promise<CategorySate> {
+export function get_category_by_id(id: string): Promise<CategoryState> {
   return axios.get(`/categories/${id}`).then(({data}) => {
     return data;
   })
 }
 
-export function create_category(category: CategorySate): Promise<CategorySate> {
+export function create_category(category: CategoryState): Promise<CategoryState> {
   return axios_auth.post('/categories', JSON.stringify(category)).then(({data}) => {
     return data;
   })
 }
 
-export function update_category(id: any, category: CategorySate): Promise<CategorySate> {
+export function update_category(id: any, category: CategoryState): Promise<CategoryState> {
   return axios_auth.patch(`/categories/${id}/edit`, JSON.stringify(category)).then(({data}) => {
     return data;
   })

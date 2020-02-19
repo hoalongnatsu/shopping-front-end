@@ -12,6 +12,9 @@ import { SET_ERROR_MESSAGE } from './feedback';
 export const GET_PRODUCTS_REQUEST = 'GET_PRODUCTS_REQUEST';
 export const GET_PRODUCTS_SUCCESS = 'GET_PRODUCTS_SUCCESS';
 export const GET_PRODUCTS_FAILURE = 'GET_PRODUCTS_FAILURE';
+export const GET_PRODUCTS_BY_FILTER_REQUEST = 'GET_PRODUCTS_BY_FILTER_REQUEST';
+export const GET_PRODUCTS_BY_FILTER_SUCCESS = 'GET_PRODUCTS_BY_FILTER_SUCCESS';
+export const GET_PRODUCTS_BY_FILTER_FAILURE = 'GET_PRODUCTS_BY_FILTER_FAILURE';
 export const GET_TOP_SALE_PRODUCT_REQUEST = 'GET_TOP_SALE_PRODUCT_REQUEST';
 export const GET_TOP_SALE_PRODUCT_SUCCESS = 'GET_TOP_SALE_PRODUCT_SUCCESS';
 export const GET_TOP_SALE_PRODUCT_FAILURE = 'GET_TOP_SALE_PRODUCT_FAILURE';
@@ -58,6 +61,34 @@ export function get_all_products(): ThunkAction<void, {}, {}, AnyAction> {
     }).catch((e) => {
       batch(() => {
         dispatch({type: GET_PRODUCTS_FAILURE})
+        dispatch({
+          type: SET_ERROR_MESSAGE,
+          payload: 'Something went wrong please try again later!'
+        })
+      })
+    })
+  }
+}
+
+export function get_products_by_filter(
+  color_id: string,
+  size: string,
+  price_range: number[],
+  category_id: string,
+  brand_id: string,
+  page: number
+): ThunkAction<void, {}, {}, AnyAction> {
+  return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+    dispatch({type: GET_PRODUCTS_BY_FILTER_REQUEST})
+
+    products.get_product_by_filter(color_id, size, price_range, category_id, brand_id, page).then((products) => {
+      dispatch({
+        type: GET_PRODUCTS_BY_FILTER_SUCCESS,
+        payload: products
+      })
+    }).catch((e) => {
+      batch(() => {
+        dispatch({type: GET_PRODUCTS_BY_FILTER_FAILURE})
         dispatch({
           type: SET_ERROR_MESSAGE,
           payload: 'Something went wrong please try again later!'

@@ -10,6 +10,9 @@ import ColorsPlaceholder from 'components/ColorsPlaceholder';
 /* Interface */
 import { ProductState } from 'interface';
 
+/* Helpers */
+import { formatToCurrencyVND } from 'helpers/format';
+
 const { Title } = Typography;
 const { Option } = Select;
 const { REACT_APP_IMAGE_URL, REACT_APP_SERVER_PRODUCT_IMAGE_FOLDER } = process.env;
@@ -39,11 +42,11 @@ class Item extends Component<Props, State> {
         </div>
         <div className="content">
           <Title level={4} ellipsis={true}>{product.name}</Title>
-          <div className="price">{product.price}</div>
+          <div className="price">{formatToCurrencyVND(product.price)}</div>
         </div>
         <div className="cover">
           <Title level={4} ellipsis={true} className="name">{product.name}</Title>
-          <div className="price">{product.price}</div>
+          <div className="price">{formatToCurrencyVND(product.price)}</div>
           <div className="colors">
             <ColorsPlaceholder colors={product.colors} setActive={(item) => console.log(item)} />
           </div>

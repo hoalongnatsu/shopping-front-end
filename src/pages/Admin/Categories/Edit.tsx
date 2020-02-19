@@ -6,7 +6,7 @@ import { Alert, Skeleton } from 'antd';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 /* Interface */
-import { RootState, CategorySate } from 'interface';
+import { RootState, CategoryState } from 'interface';
 
 /* Constant */
 import { FormType } from 'constant-app';
@@ -18,13 +18,13 @@ import { get_category_by_id } from 'services/categories';
 const CreateEditCategoryForm = React.lazy(() => import('components/CreateEditForm/Category'));
 
 interface StateToProps {
-  categories: CategorySate[],
+  categories: CategoryState[],
 }
 
 type Props = RouteComponentProps<{id: string}> & StateToProps;
 
 interface State {
-  category: CategorySate | null,
+  category: CategoryState | null,
   loading: boolean,
   error: boolean,
   message: string

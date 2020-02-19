@@ -1,0 +1,27 @@
+.size-group {
+  display: flex;
+  flex-wrap: wrap;
+
+  &__item {
+    margin-bottom: 10px;
+
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+
+    padding: 5px 0;
+    background: var(--color-dark-quaternary);
+    border-radius: 4px;
+    width: 50px;
+    text-align: center;
+    cursor: pointer;
+    color: var(--color-dark-secondary);
+    font-weight: 400;
+    
+    &.active, &:hover {
+      transition: all .3s ease;
+      background: var(--color-red);
+      color: white;
+    }
+  }
+}

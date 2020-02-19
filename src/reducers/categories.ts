@@ -1,5 +1,5 @@
 /* Interface */
-import { CategorySate, Action } from 'interface';
+import { CategoryState, Action } from 'interface';
 
 import {
   GET_CATEGORIES_SUCCESS,
@@ -8,9 +8,9 @@ import {
   DELETE_CATEGORY_SUCCESS
 } from 'actions/categories';
 
-const initialState: CategorySate[] = [];
+const initialState: CategoryState[] = [];
 
-export default function categories(state: CategorySate[] = initialState, action: Action): CategorySate[] {
+export default function categories(state: CategoryState[] = initialState, action: Action): CategoryState[] {
   switch (action.type) {
     case GET_CATEGORIES_SUCCESS: {
       return action.payload;

@@ -1,0 +1,21 @@
+.filter-product {
+
+  & > div {
+    padding: 10px 20px;
+  }
+
+  .category {
+    margin-top: 20px;
+  }
+
+  .button {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -10px;
+
+    & > * {
+      flex: 1;
+      margin: 10px;
+    }
+  }
+}

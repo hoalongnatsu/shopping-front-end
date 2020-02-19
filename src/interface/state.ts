@@ -22,7 +22,7 @@ export interface ColorsState {
   code: string,
 }
 
-export interface CategorySate {
+export interface CategoryState {
   _id?: string,
   name: string,
 }
@@ -54,7 +54,7 @@ export interface ProductState {
   name: string,
   top_sale: boolean,
   hot: boolean,
-  category: CategorySate,
+  category: CategoryState,
   brand: BrandsState,
   short_descripsion: string,
   descripsion: string,
@@ -63,6 +63,14 @@ export interface ProductState {
   sale: number,
   image_cover: string,
   props: ProductProps
+}
+
+export interface ProductFiltersState {
+  color_id?: string,
+  size?: string,
+  price_range?: number[],
+  category_id?: string,
+  brand_id?: string,
 }
 
 export interface TrashState {
@@ -77,9 +85,10 @@ export interface RootState {
   feedback: FeedbackState,
   user: UserState,
   colors: ColorsState[],
-  categories: CategorySate[],
+  categories: CategoryState[],
   brands: BrandsState[],
   products: ProductState[],
+  product_filters: ProductFiltersState,
   trash: TrashState,
 
   // Initialize State

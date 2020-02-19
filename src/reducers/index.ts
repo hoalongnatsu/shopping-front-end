@@ -10,6 +10,7 @@ import colors from './colors';
 import categories from './categories';
 import brands from './brands';
 import products from './products';
+import { product_filters } from './filters';
 import user from './user';
 import trash from './trash';
 import {
@@ -28,6 +29,7 @@ export default combineReducers<RootState>({
   categories,
   brands,
   products,
+  product_filters,
   trash,
 
   // Initialize State

@@ -56,36 +56,38 @@ class NewProducts extends Component<Props, State> {
     const { new_products, loading, error, message } = this.props;
 
     return (
-      error ? (
-        <Alert message={message} type="error" closable={true} style={{marginBottom: 12}} />
-      ) : (
-        <>
-          <Title level={3} style={{textTransform: "uppercase"}} id="shopping">Sản phẩm mới</Title>
-          <Row gutter={[16, 16]} style={{marginBottom: 20}}>
-            {
-              loading ?
-                (new Array(8).fill(1)).map((_, index) => (
-                  <Col key={index} xs={24} sm={12} md={6}>
-                    <div className="box-shadow" style={{padding: 10}}><Skeleton active={true} paragraph={{rows: 4}} /></div>
-                  </Col>
-                ))
-              :
-                <>
-                  {
-                    new_products.map((product) => (
-                      <Col key={product._id} xs={24} sm={12} md={6}>
-                        <CardProductItem tag={true} type="new" product={product} />
-                      </Col>
-                    ))
-                  }
-                  <Col xs={24} style={{textAlign: "right"}}>
-                    <Link className="btn-text" to="">Xem tất cả &rarr;</Link>
-                  </Col>
-                </>
-            }
-          </Row>
-        </>
-      )
+      <>
+        <Title level={3} style={{textTransform: "uppercase"}} id="shopping">Sản phẩm mới</Title>
+        {
+          error ? (
+            <Alert message={message} type="error" closable={true} style={{marginBottom: 12}} />
+          ) : (
+            <Row gutter={[16, 16]} style={{marginBottom: 20}}>
+              {
+                loading ?
+                  (new Array(8).fill(1)).map((_, index) => (
+                    <Col key={index} xs={24} sm={12} md={6}>
+                      <div className="box-shadow" style={{padding: 10}}><Skeleton active={true} paragraph={{rows: 4}} /></div>
+                    </Col>
+                  ))
+                :
+                  <>
+                    {
+                      new_products.map((product) => (
+                        <Col key={product._id} xs={24} sm={12} md={6}>
+                          <CardProductItem tag={true} type="new" product={product} />
+                        </Col>
+                      ))
+                    }
+                    <Col xs={24} style={{textAlign: "right"}}>
+                      <Link className="btn-text" to="/products/category/all">Xem tất cả &rarr;</Link>
+                    </Col>
+                  </>
+              }
+            </Row>
+          )
+        }
+      </>
     )
   }
 }

@@ -4,7 +4,7 @@ import { batch } from 'react-redux';
 import { message } from 'antd';
 
 /* Interface */
-import { CategorySate } from 'interface';
+import { CategoryState } from 'interface';
 
 import categories from 'services/categories';
 import { SET_ERROR_MESSAGE } from './feedback';
@@ -43,7 +43,7 @@ export function get_all_categories(): ThunkAction<void, {}, {}, AnyAction> {
   }
 }
 
-export function create_category(category: CategorySate, history: any): ThunkAction<void, {}, {}, AnyAction> {
+export function create_category(category: CategoryState, history: any): ThunkAction<void, {}, {}, AnyAction> {
   return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     dispatch({type: CREATE_CATEGORY_REQUEST});
 
@@ -75,7 +75,7 @@ export function create_category(category: CategorySate, history: any): ThunkActi
   }
 }
 
-export function update_category(id: any, category: CategorySate, history: any): ThunkAction<void, {}, {}, AnyAction> {
+export function update_category(id: any, category: CategoryState, history: any): ThunkAction<void, {}, {}, AnyAction> {
   return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     dispatch({type: UPDATE_CATEGORY_REQUEST});
 

@@ -8,7 +8,6 @@ import TopSaleProductAdvertising from 'components/TopSaleProductAdvertising';
 import HotProducts from 'components/HotProducts';
 import NewProducts from 'components/NewProducts';
 import Subscribtion from 'components/Subscribtion';
-import Footer from 'components/Footer';
 
 interface Props {
   
@@ -46,7 +45,6 @@ class Home extends Component<Props, State> {
           </Row> */}
         </section>
         <Subscribtion />
-        <Footer />
       </>
     )
   }

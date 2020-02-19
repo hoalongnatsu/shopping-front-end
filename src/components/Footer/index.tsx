@@ -1,19 +1,33 @@
 import './index.scss';
 
 import React from 'react';
+import { connect } from 'react-redux';
 import { Typography } from 'antd';
 import { Link } from 'react-router-dom';
 
 /* Components */
 import Logo from 'components/Logo';
 
+/* Interface */
+import { RootState, CategoryState } from 'interface';
+
 const { Title } = Typography;
 
-interface Props {
+interface ComponentProps {
   
 }
 
-const Footer: React.FC<Props> = () => (
+interface StateToProps {
+  categories: CategoryState[],
+}
+
+interface DispatchProps {
+  
+}
+
+type Props = ComponentProps & StateToProps & DispatchProps;
+
+const Footer: React.FC<Props> = ({categories}) => (
   <div className="footer">
     <div className="footer__container">
       <div className="footer__content">
@@ -22,9 +36,11 @@ const Footer: React.FC<Props> = () => (
         </div>
         <div className="footer__item">
           <Title level={4} className="title">Sản phẩm</Title>
-          <p className="text"><Link to="/">Áo</Link></p>
-          <p className="text">Quần</p>
-          <p className="text">Đầm</p>
+          {
+            categories.map((category) => (
+              <p key={category._id} className="text"><Link to={`/products/category/${category.name}`}>{category.name}</Link></p>
+            ))
+          }
         </div>
         <div className="footer__item">
           <Title level={4} className="title">Thông tin liên lạc</Title>
@@ -43,4 +59,12 @@ const Footer: React.FC<Props> = () => (
   </div>
 )
 
-export default Footer;
+const mapStateToProps = (state: RootState) => {
+  const { categories } = state;
+
+  return {
+    categories
+  }
+}
+
+export default connect(mapStateToProps, {})(Footer);

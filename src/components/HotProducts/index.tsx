@@ -55,11 +55,12 @@ class HotProducts extends Component<Props, State> {
     const { hot_products, loading, error, message } = this.props;
 
     return (
-      error ? (
-        <Alert message={message} type="error" closable={true} style={{marginBottom: 12}} />
-      ) : (
-        <>
-          <Title level={3} style={{textTransform: "uppercase"}}>Bán chạy nhất</Title>
+      <>
+      <Title level={3} style={{textTransform: "uppercase"}}>Bán chạy nhất</Title>
+      {
+        error ? (
+          <Alert message={message} type="error" closable={true} style={{marginBottom: 12}} />
+        ) : (
           <Row gutter={[16, 16]} style={{marginBottom: 20}}>
             {
               loading ?
@@ -76,8 +77,9 @@ class HotProducts extends Component<Props, State> {
                 ))
             }
           </Row>
-        </>
-      )
+        )
+      }
+      </>
     )
   }
 }

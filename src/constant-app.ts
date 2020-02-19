@@ -8,4 +8,4 @@ export enum AuthForm {
   REGISTER = 'register'
 }
 
-export const SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+export const SIZE = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];

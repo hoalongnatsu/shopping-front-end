@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import ContentAction from 'pages/Admin/Content/Action';
 
 /* Interface */
-import { RootState, CategorySate } from 'interface';
+import { RootState, CategoryState } from 'interface';
 
 /* Actions */
 import { get_all_categories, delete_category } from 'actions/categories';
@@ -28,7 +28,7 @@ interface ComponentProps {
 }
 
 interface StateToProps {
-  categories: CategorySate[],
+  categories: CategoryState[],
   loading: boolean,
   error: boolean,
   message: string

@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 
 /* Components */
 import Topbar from 'components/Topbar';
+import Footer from 'components/Footer';
 
 interface Props {
   
@@ -21,6 +22,7 @@ class App extends Component<Props, State> {
       <>
         <Topbar />
         {this.props.children}
+        <Footer />
       </>
     )
   }

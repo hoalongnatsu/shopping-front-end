@@ -3,6 +3,8 @@
   position: relative;
   z-index: 1;
   background: white;
+  position: sticky;
+  top: 0;
 
   &__container {
     max-width: 1300px;

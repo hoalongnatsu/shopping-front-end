@@ -7,7 +7,7 @@ import { FormComponentProps } from 'antd/es/form';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 /* Interface */
-import { RootState, CategorySate } from 'interface';
+import { RootState, CategoryState } from 'interface';
 
 /* Constant */
 import { FormType } from 'constant-app';
@@ -22,7 +22,7 @@ const { Title } = Typography;
 
 interface ComponentProps {
   formType: FormType,
-  category?: CategorySate | null
+  category?: CategoryState | null
 }
 
 interface StateToProps {
@@ -32,8 +32,8 @@ interface StateToProps {
 }
 
 interface DispacthToProps {
-  create_category: (brand: CategorySate, history: any) => void,
-  update_category: (id: any, brand: CategorySate, history: any) => void,
+  create_category: (brand: CategoryState, history: any) => void,
+  update_category: (id: any, brand: CategoryState, history: any) => void,
 }
 
 type Props = FormComponentProps & RouteComponentProps & ComponentProps & StateToProps & DispacthToProps;
@@ -52,7 +52,7 @@ export class Category extends Component<Props, State> {
     const { formType, form } = this.props;
     
     if (formType === FormType.EDIT) {
-      const { name } = this.props.category as CategorySate;
+      const { name } = this.props.category as CategoryState;
       form.setFieldsValue({name});
     }
   }
