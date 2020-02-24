@@ -1,6 +1,7 @@
 import React from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 
+import ScrollToTop from 'components/Route/ScrollToTop';
 import CustomRoute from 'components/Route/CustomRoute';
 
 /* Layout */
@@ -8,10 +9,10 @@ import App from 'layouts/App';
 import Admin from 'layouts/Admin';
 
 /* Page */
+import Home from 'pages/Home';
 import NotFound from 'pages/NotFound';
 
 /* Lazy Page */
-const Home = React.lazy(() => import('pages/Home'));
 const Products = React.lazy(() => import('pages/Products'));
 const About = React.lazy(() => import('pages/About'));
 
@@ -73,20 +74,28 @@ export const routes = [
 
   /* App route */
   { name: 'About', path: '/about', component: About, layout: App, requireLogin: false, isAdmin: false },
-  { name: 'Products', path: '/products/category/:name', component: Products, layout: App, requireLogin: false, isAdmin: false },
-  { name: 'Home', path: '/', component: Home, layout: App, requireLogin: false, isAdmin: false },
-  
+  { name: 'Products', path: '/products/category/:slug', component: Products, layout: App, requireLogin: false, isAdmin: false },
 ];
 
 export const RootRouter: React.FC<Props> = () => (
   <HashRouter>
-      <Switch>
-        {
-          routes.map(({name, ...route}) => (
-            <CustomRoute key={name} {...route} />
-          ))
-        }
-        <Route path="*" component={NotFound} />
-      </Switch>
-    </HashRouter>
+    <ScrollToTop />
+    <Switch>
+      {
+        routes.map(({name, ...route}) => (
+          <CustomRoute key={name} {...route} />
+        ))
+      }
+      <Route
+        exact={true}
+        path="/"
+        render={props => (
+          <App>
+            <Home {...props} />
+          </App>
+        )}
+      />
+      <Route path="*" component={NotFound} />
+    </Switch>
+  </HashRouter>
 )

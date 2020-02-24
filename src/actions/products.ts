@@ -12,6 +12,7 @@ import { SET_ERROR_MESSAGE } from './feedback';
 export const GET_PRODUCTS_REQUEST = 'GET_PRODUCTS_REQUEST';
 export const GET_PRODUCTS_SUCCESS = 'GET_PRODUCTS_SUCCESS';
 export const GET_PRODUCTS_FAILURE = 'GET_PRODUCTS_FAILURE';
+export const GET_PRODUCT_PAGINATION_SUCCESS = 'GET_PRODUCT_PAGINATION_SUCCESS';
 export const GET_PRODUCTS_BY_FILTER_REQUEST = 'GET_PRODUCTS_BY_FILTER_REQUEST';
 export const GET_PRODUCTS_BY_FILTER_SUCCESS = 'GET_PRODUCTS_BY_FILTER_SUCCESS';
 export const GET_PRODUCTS_BY_FILTER_FAILURE = 'GET_PRODUCTS_BY_FILTER_FAILURE';
@@ -81,10 +82,16 @@ export function get_products_by_filter(
   return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     dispatch({type: GET_PRODUCTS_BY_FILTER_REQUEST})
 
-    products.get_product_by_filter(color_id, size, price_range, category_id, brand_id, page).then((products) => {
-      dispatch({
-        type: GET_PRODUCTS_BY_FILTER_SUCCESS,
-        payload: products
+    products.get_product_by_filter(color_id, size, price_range, category_id, brand_id, page).then(({product_pagination, products}) => {
+      batch(() => {
+        dispatch({
+          type: GET_PRODUCT_PAGINATION_SUCCESS,
+          payload: product_pagination
+        })
+        dispatch({
+          type: GET_PRODUCTS_BY_FILTER_SUCCESS,
+          payload: products
+        })
       })
     }).catch((e) => {
       batch(() => {

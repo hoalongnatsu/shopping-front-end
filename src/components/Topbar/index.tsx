@@ -74,7 +74,7 @@ class Topbar extends Component<Props, State> {
         {
           categories.map((category) => (
             <Item key={category._id}>
-              <Link to={`/products/category/${category.name}`}>{category.name}</Link>
+              <Link to={`/products/category/${category.slug}`}>{category.name}</Link>
             </Item>
           ))
         }
@@ -155,7 +155,7 @@ class Topbar extends Component<Props, State> {
               {
                 categories.map((category) => (
                   <Item key={category._id}>
-                    <Link to={`/products/category/${category.name}`}>{category.name}</Link>
+                    <Link to={`/products/category/${category.slug}`}>{category.name}</Link>
                   </Item>
                 ))
               }

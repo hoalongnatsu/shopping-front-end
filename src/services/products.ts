@@ -1,7 +1,7 @@
 import { axios, axios_auth } from 'helpers/axios';
 
 /* Interface */
-import { ProductState } from 'interface';
+import { ProductState, ProductPagination } from 'interface';
 
 export function get_all_products(): Promise<ProductState[]> {
   return axios.get('/products').then(({data}) => {
@@ -22,7 +22,7 @@ export function get_product_by_filter(
   category_id: string,
   brand_id: string,
   page: number
-): Promise<ProductState[]> {
+): Promise<{product_pagination: ProductPagination, products: ProductState[]}> {
   const query = `color_id=${color_id}&category_id=${category_id}&brand_id=${brand_id}&size=${size}&min_price=${price_range[0]}&max_price=${price_range[1]}&page=${page}`;
 
   return axios.get(`/products/filter?${query}`).then(({data}) => {

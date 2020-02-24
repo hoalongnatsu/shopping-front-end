@@ -38,7 +38,7 @@ const Footer: React.FC<Props> = ({categories}) => (
           <Title level={4} className="title">Sản phẩm</Title>
           {
             categories.map((category) => (
-              <p key={category._id} className="text"><Link to={`/products/category/${category.name}`}>{category.name}</Link></p>
+              <p key={category._id} className="text"><Link to={`/products/category/${category.slug}`}>{category.name}</Link></p>
             ))
           }
         </div>

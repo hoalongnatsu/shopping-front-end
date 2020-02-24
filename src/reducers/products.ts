@@ -1,20 +1,21 @@
 /* Interface */
-import { ProductState, Action } from 'interface';
+import { ProductState, Action, ProductPagination } from 'interface';
 
 import {
   GET_PRODUCTS_SUCCESS,
+  GET_PRODUCT_PAGINATION_SUCCESS,
   GET_PRODUCTS_BY_FILTER_SUCCESS,
   CREATE_PRODUCT_SUCCESS,
   UPDATE_PRODUCT_SUCCESS,
   DELETE_PRODUCT_SUCCESS,
   RESTORE_PRODUCT_SUCCESS,
   TOGGLE_HOT_PRODUCT_SUCCESS,
-  TOGGLE_TOP_SALE_PRODUCT_SUCCESS
+  TOGGLE_TOP_SALE_PRODUCT_SUCCESS,
 } from 'actions/products';
 
 const initialState: ProductState[] = [];
 
-export default function products(state: ProductState[] = initialState, action: Action): ProductState[] {
+export function products(state: ProductState[] = initialState, action: Action): ProductState[] {
   switch (action.type) {
     case GET_PRODUCTS_SUCCESS: {
       return action.payload;
@@ -55,6 +56,16 @@ export default function products(state: ProductState[] = initialState, action: A
 
         return product;
       })
+    }
+    default:
+      return state;
+  }
+}
+
+export function product_pagination(state: ProductPagination = { total: 0, per_page: 0 }, action: Action): ProductPagination {
+  switch (action.type) {
+    case GET_PRODUCT_PAGINATION_SUCCESS: {
+      return action.payload;
     }
     default:
       return state;

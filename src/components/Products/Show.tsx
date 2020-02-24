@@ -14,11 +14,7 @@ import { RootState, ProductState } from 'interface';
 import { get_products_by_filter } from 'actions/products';
 
 /* Helpers */
-import {
-  create_loading_selector,
-  create_error_selector,
-  descending_order_selector
-} from 'helpers/selectors';
+import { create_loading_selector, create_error_selector } from 'helpers/selectors';
 
 interface ComponentProps {
   category_id: string,
@@ -92,7 +88,7 @@ class Show extends Component<Props, State> {
               :
                 products.map((product) => (
                   <Col key={product._id} sm={8}>
-                    <CardProductItem tag={true} type="new" product={product} />
+                    <CardProductItem product={product} />
                   </Col>
                 ))
           }
@@ -102,12 +98,11 @@ class Show extends Component<Props, State> {
   }
 }
 
-const descending_products_selector = descending_order_selector();
 const mapStateToProps = (state: RootState) => {
-  const { loading, errors, feedback } = state;
+  const { products, loading, errors, feedback } = state;
 
   return {
-    products: descending_products_selector(state, 'products'),
+    products,
     loading: create_loading_selector(['GET_PRODUCTS_BY_FILTER'])(loading),
     error: create_error_selector(['GET_PRODUCTS_BY_FILTER'])(errors),
     message: feedback.error

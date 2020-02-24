@@ -25,6 +25,7 @@ export interface ColorsState {
 export interface CategoryState {
   _id?: string,
   name: string,
+  slug: string
 }
 
 export interface BrandsState {
@@ -71,6 +72,12 @@ export interface ProductFiltersState {
   price_range?: number[],
   category_id?: string,
   brand_id?: string,
+  page?: number
+}
+
+export interface ProductPagination {
+  total: number,
+  per_page: number
 }
 
 export interface TrashState {
@@ -88,7 +95,8 @@ export interface RootState {
   categories: CategoryState[],
   brands: BrandsState[],
   products: ProductState[],
-  product_filters: ProductFiltersState,
+  product_pagination: ProductPagination,
+  filters: ProductFiltersState,
   trash: TrashState,
 
   // Initialize State
