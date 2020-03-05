@@ -19,10 +19,23 @@
       }
 
       img {
+        max-height: 300px;
         height: 100%;
         width: 100%;
         object-fit: cover;
-        object-position: top;
+        object-position: 50% 25%;
+
+        @media screen and (max-width: 992px) {
+          max-height: 250px;
+        }
+
+        @media screen and (max-width: 768px) {
+          max-height: 200px;
+        }
+
+        @media screen and (max-width: 576px) {
+          max-height: 150px;
+        }
       }
     }
 
@@ -30,10 +43,40 @@
       margin-bottom: 8px;
     }
 
+    .name {
+      @media screen and (max-width: 992px) {
+        font-size: 18px;
+      }
+
+      @media screen and (max-width: 768px) {
+        font-size: 16px;
+      }
+
+      @media screen and (max-width: 576px) {
+        font-size: 14px;
+      }
+    }
+
     .price {
       font-weight: 600;
       font-size: 20px;
       color: var(--color-red);
+
+      @media screen and (max-width: 992px) {
+        font-size: 18px;
+      }
+
+      @media screen and (max-width: 768px) {
+        font-size: 16px;
+      }
+
+      @media screen and (max-width: 576px) {
+        font-size: 14px;
+      }
+
+      @media screen and (max-width: 480px) {
+        font-size: 13px;
+      }
     }
 
     .content {
@@ -63,6 +106,10 @@
 
       .colors {
         padding: 20px;
+
+        @media screen and (max-width: 768px) {
+          padding: 10px;
+        }
       }
 
       .button {
@@ -73,6 +120,10 @@
         @media screen and (max-width: 992px) {
           flex-direction: column;
           align-items: center;
+        }
+
+        @media screen and (max-width: 576px) {
+          margin-bottom: 10px;
         }
 
         .ant-select {

@@ -8,7 +8,8 @@ import { UserState } from 'interface';
 import user from 'services/user';
 import { SET_ERROR_MESSAGE } from './feedback';
 
-export const REQUEST_USER = 'REQUES_USER';
+export const REQUEST_USER = 'REQUEST_USER';
+export const LOGOUT_USER = 'LOGOUT_USER';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
@@ -17,12 +18,7 @@ export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAILURE = 'REGISTER_FAILURE';
 
 export function request_user(): AnyAction {
-  const user: UserState = {
-    username: localStorage.getItem('username') as string,
-    email: localStorage.getItem('email') as string,
-    jwt: localStorage.getItem('jwt') as string,
-    admin: localStorage.getItem('admin') as string,
-  }
+  const user: UserState = JSON.parse(localStorage.getItem('user') as string)
 
   return {
     type: REQUEST_USER,
@@ -39,9 +35,7 @@ export function login(values: any, history: any): ThunkAction<void, {}, {}, AnyA
         type: LOGIN_SUCCESS,
         payload: user
       });
-      Object.keys(user).forEach((key: string) => {
-        localStorage.setItem(key, user[key])
-      })
+      localStorage.setItem('user', JSON.stringify(user));
       history.push('/');
     }).catch(({response}) => {
       set_error(response, dispatch, 'LOGIN');
@@ -58,13 +52,19 @@ export function register(values: any, history: any): ThunkAction<void, {}, {}, A
         type: REGISTER_SUCCESS,
         payload: user
       });
-      Object.keys(user).forEach((key: string) => {
-        localStorage.setItem(key, user[key])
-      })
+      localStorage.setItem('user', JSON.stringify(user));
       history.push('/');
     }).catch(({response}) => {
       set_error(response, dispatch, 'REGISTER');
     })
+  }
+}
+
+export function logout(): AnyAction {
+  localStorage.removeItem('user');
+  
+  return {
+    type: LOGOUT_USER
   }
 }
 

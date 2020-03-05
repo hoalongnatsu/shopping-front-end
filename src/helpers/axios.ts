@@ -19,8 +19,11 @@ export const axios_auth = a.create({
 })
 
 axios_auth.interceptors.request.use((config) => {
-  const token = localStorage.getItem('jwt');
-  config.headers['token'] = token;
+  const token = JSON.parse(localStorage.getItem('user') as string)?.jwt;
+
+  if (token) {
+    config.headers['token'] = token;
+  }
   return config;
 }, (error) => {
   Promise.reject(error)

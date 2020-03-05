@@ -10,12 +10,15 @@ import ProductSearch from 'components/ProductSearch';
 import Logo from 'components/Logo';
 
 /* Interface */
-import { RootState, CategoryState } from 'interface';
+import { RootState, CategoryState, UserState } from 'interface';
 
 /* Actions */
 import { get_all_categories } from 'actions/categories';
+import { logout } from 'actions/user';
 
 const { Item, SubMenu } = Menu;
+const { REACT_APP_IMAGE_URL, REACT_APP_SERVER_AVATAR_IMAGE_FOLDER } = process.env;
+const IMAGE_URL = `${REACT_APP_IMAGE_URL}/${REACT_APP_SERVER_AVATAR_IMAGE_FOLDER}`;
 
 interface ComponentProps {
   
@@ -23,10 +26,12 @@ interface ComponentProps {
 
 interface StateToProps {
   categories: CategoryState[],
+  user: UserState
 }
 
 interface DispatchProps {
   get_all_categories: () => void,
+  logout: () => void,
 }
 
 type Props = ComponentProps & StateToProps & DispatchProps;
@@ -83,20 +88,37 @@ class Topbar extends Component<Props, State> {
   }
 
   _renderDropDownUser = () => {
+    const { user, logout } = this.props;
+
     return (
-      <Menu>
-        <Item key="login">
-          <Link to="/login">Đăng ký</Link>
-        </Item>
-        <Item key="register">
-          <Link to="/login">Đăng nhập</Link>
-        </Item>
-      </Menu>
+      user?.jwt ? (
+        <Menu>
+          <Item key="profile">
+            <Link to="/">Hồ sơ cá nhân</Link>
+          </Item>
+          <Item key="bill">
+            <Link to="/">Đơn hàng</Link>
+          </Item>
+          <Item key="game">
+            <Link to="/">Quay số</Link>
+          </Item>
+          <Menu.Divider />
+          <Item key="logout" onClick={logout}>
+            Thoát
+          </Item>
+        </Menu>
+      ) : (
+        <Menu>
+          <Item key="register">
+            <Link to="/login">Đăng nhập</Link>
+          </Item>
+        </Menu>
+      )
     )
   }
 
   render() {
-    const { categories } = this.props;
+    const { categories, user } = this.props;
     const { showSearch, showMobileMenu } = this.state;
 
     return (
@@ -128,9 +150,21 @@ class Topbar extends Component<Props, State> {
                   <Icon type="shopping-cart" />
                 </Badge>
               </div>
-              <div className="topbar__icon">
+              <div className={user?.jwt ? "topbar__icon topbar__icon--avatar" : "topbar__icon"}>
                 <Dropdown overlay={this._renderDropDownUser}>
-                  <Icon type="user" />
+                  {
+                    user?.jwt ? (
+                      <div className="avatar">
+                        {
+                          user?.meta?.avatar ? (
+                            <img src={`${IMAGE_URL}/${user.meta?.avatar}`} alt={user.username} />
+                          ) : user.username[0]
+                        }
+                      </div>
+                    ) : (
+                      <Icon type="user" />
+                    )
+                  }
                 </Dropdown>
               </div>
               <div className="topbar__icon topbar__icon--menu">
@@ -152,6 +186,9 @@ class Topbar extends Component<Props, State> {
               <Link to="/">Home</Link>
             </Item>
             <SubMenu title="Sản phẩm">
+              <Item key="all">
+                <Link to="/products/category/all">All</Link>
+              </Item>
               {
                 categories.map((category) => (
                   <Item key={category._id}>
@@ -169,11 +206,12 @@ class Topbar extends Component<Props, State> {
 }
 
 const mapStateToProps = (state: RootState) => {
-  const { categories } = state;
+  const { categories, user } = state;
 
   return {
-    categories
+    categories,
+    user
   }
 }
 
-export default connect(mapStateToProps, { get_all_categories })(Topbar);
+export default connect(mapStateToProps, { get_all_categories, logout })(Topbar);

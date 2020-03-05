@@ -11,6 +11,7 @@ import Admin from 'layouts/Admin';
 /* Page */
 import Home from 'pages/Home';
 import NotFound from 'pages/NotFound';
+import ProductsBySlug from 'pages/Products/BySlug';
 
 /* Lazy Page */
 const Products = React.lazy(() => import('pages/Products'));
@@ -75,6 +76,7 @@ export const routes = [
   /* App route */
   { name: 'About', path: '/about', component: About, layout: App, requireLogin: false, isAdmin: false },
   { name: 'Products', path: '/products/category/:slug', component: Products, layout: App, requireLogin: false, isAdmin: false },
+  { name: 'Products By Slug', path: '/products/:slug', component: ProductsBySlug, layout: App, requireLogin: false, isAdmin: false },
 ];
 
 export const RootRouter: React.FC<Props> = () => (

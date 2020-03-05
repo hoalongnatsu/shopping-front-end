@@ -65,13 +65,13 @@ class HotProducts extends Component<Props, State> {
             {
               loading ?
                 (new Array(4).fill(1)).map((_, index) => (
-                  <Col key={index} xs={24} sm={12} md={6}>
+                  <Col key={index} xs={12} sm={8} md={6}>
                     <div className="box-shadow" style={{padding: 10}}><Skeleton active={true} paragraph={{rows: 4}} /></div>
                   </Col>
                 ))
               :
                 hot_products.map((product) => (
-                  <Col key={product._id} xs={24} sm={12} md={6}>
+                  <Col key={product._id} xs={12} sm={8} md={6}>
                     <CardProductItem tag={true} type="hot" product={product} />
                   </Col>
                 ))

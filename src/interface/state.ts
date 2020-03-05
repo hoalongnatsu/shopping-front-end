@@ -35,10 +35,16 @@ export interface BrandsState {
 }
 
 export interface UserState {
-  [username: string]: string,
+  username: string,
   email: string,
   jwt: string,
-  admin: string
+  admin: string,
+  meta?: UserMeta
+}
+
+export interface UserMeta {
+  avatar: string,
+  sex: string
 }
 
 export interface ProductPropValues {
@@ -53,6 +59,7 @@ export interface ProductProps {
 export interface ProductState {
   _id?: string,
   name: string,
+  slug: string,
   top_sale: boolean,
   hot: boolean,
   category: CategoryState,

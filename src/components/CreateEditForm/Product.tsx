@@ -128,18 +128,19 @@ class Products extends Component<Props, State> {
     const { form, formType, create_product, update_product, history, product } = this.props;
     const { productsColors, productProps, imageCover, editorState } = this.state;
 
-    form.validateFields((err, products) => {
+    form.validateFields((err, product_data) => {
       if (!err) {
-        products.descripsion = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
-        products.colors = productsColors.map((color: ColorsState) => color._id);
-        products.image_cover = imageCover;
-        products.props = productProps;
+        product_data.descripsion = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
+        product_data.colors = productsColors.map((color: ColorsState) => color._id);
+        product_data.image_cover = imageCover;
+        product_data.props = productProps;
 
         if (formType === FormType.CREATE) {
-          create_product(products, history);
+          create_product(product_data, history);
         } else {
           const id = product && product._id;
-          update_product(id, products, history);
+          product_data.slug = product?.slug;
+          update_product(id, product_data, history);
         }
 
         this.setState({submitted: true})

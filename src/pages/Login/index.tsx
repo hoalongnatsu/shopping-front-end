@@ -51,7 +51,7 @@ class Login extends Component<Props, State> {
   }
 
   componentDidMount() {
-    if(localStorage.getItem('jwt')) {
+    if(JSON.parse(localStorage.getItem('user') as string)) {
       this.props.history.push('/');
     }
   }

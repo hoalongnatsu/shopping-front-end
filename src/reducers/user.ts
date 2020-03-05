@@ -3,15 +3,11 @@ import { UserState, Action } from 'interface';
 
 import {
   REQUEST_USER,
-  LOGIN_SUCCESS
+  LOGIN_SUCCESS,
+  LOGOUT_USER
 } from 'actions/user';
 
-const initialState: UserState = {
-  username: '',
-  email: '',
-  jwt: '',
-  admin: ''
-};
+const initialState: UserState = {} as UserState;
 
 export default function user(state: UserState = initialState, action: Action): UserState {
   switch (action.type) {
@@ -20,6 +16,9 @@ export default function user(state: UserState = initialState, action: Action): U
     }
     case LOGIN_SUCCESS: {
       return action.payload;
+    }
+    case LOGOUT_USER: {
+      return {} as UserState;
     }
     default:
       return state;

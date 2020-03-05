@@ -78,7 +78,7 @@ class Show extends Component<Props, State> {
           {
             loading ?
               (new Array(9).fill(1)).map((_, index) => (
-                <Col key={index} sm={8}>
+                <Col key={index} xs={12} sm={8}>
                   <div className="box-shadow" style={{padding: 10}}><Skeleton active={true} paragraph={{rows: 4}} /></div>
                 </Col>
               ))
@@ -87,7 +87,7 @@ class Show extends Component<Props, State> {
                 <Empty description="Không có sản phẩm" />
               :
                 products.map((product) => (
-                  <Col key={product._id} sm={8}>
+                  <Col key={product._id} xs={12} sm={8}>
                     <CardProductItem product={product} />
                   </Col>
                 ))

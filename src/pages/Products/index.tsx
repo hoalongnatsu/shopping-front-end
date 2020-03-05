@@ -86,6 +86,7 @@ class Products extends Component<Props, State> {
                 </Col>
               </Row>
               <ProductsCustomPagination />
+              <ProductsCustomPagination simple={true} />
             </>
           )
         }

@@ -41,7 +41,7 @@ class Item extends Component<Props, State> {
           <img src={`${IMAGE_URL}/${product.image_cover}`} alt="product" />
         </div>
         <div className="content">
-          <Title level={4} ellipsis={true}>{product.name}</Title>
+          <Title level={4} ellipsis={true} className="name">{product.name}</Title>
           <div className="price">{formatToCurrencyVND(product.price)}</div>
         </div>
         <div className="cover">
@@ -58,7 +58,7 @@ class Item extends Component<Props, State> {
             </Select>
             <Button type="primary">Cho vào <Icon type="shopping-cart" /></Button>
           </div>
-          <Link to="#product" className="view">Xem chi tiết</Link>
+          <Link to={`/products/${product.slug}`} className="view">Xem chi tiết</Link>
         </div>
       </div>
     )

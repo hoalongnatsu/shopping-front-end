@@ -1,0 +1,13 @@
+.product-price {
+  
+  .real {
+    font-size: 16px;
+    text-decoration: line-through;
+  }
+
+  .sale {
+    font-weight: 600;
+    font-size: 20px;
+    color: var(--color-red);
+  }
+}

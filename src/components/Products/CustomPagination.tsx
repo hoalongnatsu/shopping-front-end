@@ -12,7 +12,7 @@ import { get_products_by_filter } from 'actions/products';
 import { change_product_filters } from 'actions/filters';
 
 interface ComponentProps {
-  
+  simple?: boolean
 }
 
 interface StateToProps {
@@ -47,6 +47,10 @@ interface State {
 }
 
 class CustomPagination extends Component<Props, State> {
+  static defaultProps = {
+    simple: false
+  }
+
   state = {}
 
   _onChange = (next: number) => {
@@ -69,6 +73,7 @@ class CustomPagination extends Component<Props, State> {
       brand_id as string,
       next
     );
+    window.scrollTo(0, 0);
   }
 
   _itemRender = (page: number, type: any, origin: any) => {
@@ -97,17 +102,29 @@ class CustomPagination extends Component<Props, State> {
   }
 
   render() {
-    const { filters, product_pagination } = this.props;
+    const { filters, product_pagination, simple } = this.props;
 
     return (
-      <Pagination
-        className="custom-pagination"
-        pageSize={product_pagination.per_page}
-        total={product_pagination.total}
-        current={filters.page}
-        itemRender={this._itemRender}
-        onChange={this._onChange}
-      />
+      simple ? (
+        <Pagination
+          className="custom-pagination custom-pagination--simple"
+          pageSize={product_pagination.per_page}
+          total={product_pagination.total}
+          current={filters.page}
+          onChange={this._onChange}
+          simple={simple}
+        />
+      ) : (
+        <Pagination
+          className="custom-pagination"
+          pageSize={product_pagination.per_page}
+          total={product_pagination.total}
+          current={filters.page}
+          itemRender={this._itemRender}
+          onChange={this._onChange}
+          simple={simple}
+        />
+      )
     )
   }
 }

@@ -16,11 +16,12 @@ const PrivateRoute: React.FC<Props> = ({
   component: Component,
   layout: Layout,
 }) => {
-  const login = localStorage.getItem('jwt');
+  const user = JSON.parse(localStorage.getItem('user') as string);
+  const login = user?.jwt;
 
   if (login) {
     if(isAdmin) {
-      if (localStorage.getItem('admin')) {
+      if (user?.admin) {
         return (
           <Route
             exact={true}

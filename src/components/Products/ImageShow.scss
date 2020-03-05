@@ -1,0 +1,23 @@
+.image-gallery-slide {
+  max-height: 500px;
+
+  @media screen and (max-width: 480px) {
+    height: 350px !important;
+  }
+}
+
+.product-by-slug {
+  
+  #myPortal {
+    position: absolute;
+    z-index: 9999;
+    top: 10px;
+    left: 100%;
+
+    @media screen and (max-width: 768px) {
+      top: 100%;
+      left: auto;
+      right: 0;
+    }
+  }
+}

@@ -15,6 +15,16 @@ export function get_product_by_id(id: string): Promise<ProductState> {
   })
 }
 
+export function get_product_by_slug(slug: string): Promise<ProductState> {
+  return axios.get(`/products/${slug}`, {
+    headers: {
+      'type-parameter': 'slug',
+    }
+  }).then(({data}) => {
+    return data;
+  })
+}
+
 export function get_product_by_filter(
   color_id: string,
   size: string,
@@ -99,6 +109,7 @@ export function remove_product(id: string): Promise<string> {
 export default {
   get_all_products,
   get_product_by_id,
+  get_product_by_slug,
   get_product_by_filter,
   get_top_sale_product,
   toggle_top_sale_product,
