@@ -15,7 +15,7 @@ const Banner: React.FC<Props> = () => (
     <div className="banner__content">
       <div className="text">Phong cách thời trang độc đáo</div>
       <div className="button">
-        <Link className="custom-btn" to="/">Xem ngay</Link>
+        <Link className="custom-btn" to="/products/category/all">Xem ngay</Link>
       </div>
     </div>
   </div>
