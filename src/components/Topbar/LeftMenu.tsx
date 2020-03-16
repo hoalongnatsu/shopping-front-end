@@ -41,6 +41,9 @@ const LeftMenu: React.FC<Props> = ({categories}) => (
         </div>
       </Dropdown>
     </div>
+    <div className="topbar__item">
+      <Link className="topbar__link" to="/thanhtoan">Thanh toán</Link>
+    </div>
   </div>
 )
 

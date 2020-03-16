@@ -123,10 +123,10 @@ class RightMenu extends Component<Props, State> {
           width={800}
           footer={[
             <Button key="cancel" onClick={this.closeModal}>
-              Cancel
+              Thoát
             </Button>,
             <Button key="checkout" type="primary">
-              Checkout
+              <Link to="/thanhtoan">Thanh toán</Link>
             </Button>,
           ]}
         >

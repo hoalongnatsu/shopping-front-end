@@ -1,0 +1,21 @@
+.cart-table {
+
+  .quantity-form {
+    display: flex;
+    
+    .ant-input {
+      border-radius: 25px;
+      margin: 0 5px;
+      width: 50px;
+      text-align: center;
+    }
+  }
+
+  .ant-table-footer {
+    text-align: right;
+
+    @media screen and (max-width: 576px) {
+      text-align: left;
+    }
+  }
+}

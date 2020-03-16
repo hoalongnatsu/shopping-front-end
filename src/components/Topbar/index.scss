@@ -37,7 +37,7 @@
   }
 
   &__left {
-    @media screen and (max-width: 575px) {
+    @media screen and (max-width: 767px) {
       display: none;
     }
   }
@@ -102,7 +102,7 @@
     }
 
     &--menu {
-      @media screen and (min-width: 576px) {
+      @media screen and (min-width: 768px) {
         display: none;
       }
     }
